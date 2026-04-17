@@ -75,3 +75,43 @@
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 }
+
+/* Floating orb animations for hero background */
+@keyframes float-slow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(28px, -22px) scale(1.06); }
+  66% { transform: translate(-18px, 16px) scale(0.96); }
+}
+
+@keyframes float-medium {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40% { transform: translate(-24px, 20px) scale(1.05); }
+  70% { transform: translate(18px, -14px) scale(0.97); }
+}
+
+@keyframes float-fast {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  30% { transform: translate(20px, 18px) scale(1.04); }
+  65% { transform: translate(-16px, -22px) scale(0.98); }
+}
+
+.animate-float-slow {
+  animation: float-slow 20s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-medium 15s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float-fast 10s ease-in-out infinite;
+}
+
+/* Respect user's reduced-motion preference for orb animations */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-slow,
+  .animate-float-medium,
+  .animate-float-fast {
+    animation: none;
+  }
+}

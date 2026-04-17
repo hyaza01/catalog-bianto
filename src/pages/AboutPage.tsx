@@ -1,5 +1,6 @@
 import { CheckCircle2, MessageCircle, Sparkles, Star } from 'lucide-react'
 import { useMemo } from 'react'
+import { motion } from 'framer-motion'
 import { useSiteSettings } from '../hooks/useSiteSettings'
 import { formatBrazilPhoneDisplay, normalizePhoneDigits, resolveBrazilWhatsAppNumber } from '../utils/phone'
 import { buildDirectWhatsAppMessage, createDirectWhatsAppLink } from '../utils/whatsapp'
@@ -145,16 +146,27 @@ export const AboutPage = () => {
 
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
-      <header className="mb-10">
+      <motion.header
+        className="mb-10"
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      >
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-primary">Sobre a marca</p>
         <h1 className="mt-1 font-display text-4xl text-brand-text sm:text-5xl">Bianto Store</h1>
         <p className="mt-3 max-w-3xl text-sm leading-relaxed text-brand-primary">
           A Bianto Store nasceu para transformar brindes em experiências premium. Trabalhamos com curadoria
           de produtos personalizados para campanhas de marca, presentes corporativos e datas especiais.
         </p>
-      </header>
+      </motion.header>
 
-      <section className="grid gap-4 md:grid-cols-3">
+      <motion.section
+        className="grid gap-4 md:grid-cols-3"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+        variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
+      >
         {[
           {
             title: 'Acabamento de alto nível',
@@ -172,17 +184,35 @@ export const AboutPage = () => {
             icon: CheckCircle2,
           },
         ].map((item) => (
-          <article key={item.title} className="rounded-2xl border border-brand-surface bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-primary/10 text-brand-primary">
+          <motion.article
+            key={item.title}
+            variants={{
+              hidden: { opacity: 0, y: 22, scale: 0.97 },
+              visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const } },
+            }}
+            whileHover={{ y: -4, boxShadow: '0 10px 30px -8px rgba(43,43,43,0.15)' }}
+            className="rounded-2xl border border-brand-surface bg-white p-6 shadow-sm"
+          >
+            <motion.span
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-primary/10 text-brand-primary"
+              whileHover={{ scale: 1.12, rotate: 6 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+            >
               <item.icon size={20} aria-hidden="true" />
-            </span>
+            </motion.span>
             <h2 className="mt-4 font-display text-xl text-brand-text">{item.title}</h2>
             <p className="mt-2 text-sm leading-relaxed text-brand-primary">{item.description}</p>
-          </article>
+          </motion.article>
         ))}
-      </section>
+      </motion.section>
 
-      <section className="mt-10 rounded-2xl border border-brand-text/10 bg-white p-6 shadow-sm sm:p-8">
+      <motion.section
+        className="mt-10 rounded-2xl border border-brand-text/10 bg-white p-6 shadow-sm sm:p-8"
+        initial={{ opacity: 0, y: 28 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      >
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <h2 className="font-display text-3xl text-brand-text">Contato</h2>
@@ -203,7 +233,13 @@ export const AboutPage = () => {
           )}
         </div>
 
-        <div className="mt-6 grid gap-3 md:grid-cols-2">
+        <motion.div
+          className="mt-6 grid gap-3 md:grid-cols-2"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
+        >
           {contactLinks.length === 0 && (
             <p className="rounded-xl border border-brand-surface bg-brand-bg px-4 py-3 text-sm text-brand-primary">
               Nenhum contato configurado no momento.
@@ -211,12 +247,17 @@ export const AboutPage = () => {
           )}
 
           {contactLinks.map((contact) => (
-            <a
+            <motion.a
               key={contact.id}
               href={contact.href}
               target={/^https?:\/\//i.test(contact.href) ? '_blank' : undefined}
               rel={/^https?:\/\//i.test(contact.href) ? 'noopener noreferrer' : undefined}
-              className="group rounded-2xl border border-brand-surface bg-brand-bg p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-primary/30 hover:shadow-md"
+              variants={{
+                hidden: { opacity: 0, y: 16 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const } },
+              }}
+              whileHover={{ y: -3, boxShadow: '0 6px 20px -4px rgba(43,43,43,0.12)' }}
+              className="group rounded-2xl border border-brand-surface bg-brand-bg p-4 transition-colors duration-200 hover:border-brand-primary/30"
             >
               <div className="flex items-start gap-3">
                 <ContactLogo kind={contact.kind} size="sm" />
@@ -225,10 +266,10 @@ export const AboutPage = () => {
                   <p className="mt-1 line-clamp-2 text-sm text-brand-primary">{contact.value}</p>
                 </div>
               </div>
-            </a>
+            </motion.a>
           ))}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
     </div>
   )
 }
