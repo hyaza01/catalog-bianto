@@ -38,13 +38,13 @@ export const Header = ({ onOpenSelection, selectionCount }: HeaderProps) => {
         <NavLink
           to="/"
           className="group inline-flex items-center gap-2.5"
-          aria-label="Ir para a pagina inicial da Bianto Store"
+          aria-label="Ir para a página inicial da Bianto Store"
         >
           <span className="rounded-lg bg-brand-text px-2.5 py-1 text-xs font-bold tracking-[0.2em] text-white transition-colors group-hover:bg-brand-primary">BIANTO</span>
           <span className="font-display text-lg text-brand-text transition-colors group-hover:text-brand-primary">Store</span>
         </NavLink>
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Navegacao principal">
+        <nav className="hidden items-center gap-1 md:flex" aria-label="Navegação principal">
           {navigationLinks.map((link) => (
             <NavLink
               key={link.to}
@@ -69,7 +69,7 @@ export const Header = ({ onOpenSelection, selectionCount }: HeaderProps) => {
             variant="secondary"
             size="sm"
             onClick={onOpenSelection}
-            aria-label="Abrir selecao de produtos"
+            aria-label="Abrir seleção de produtos"
             className="hidden border border-brand-muted bg-brand-surface text-brand-text hover:bg-brand-surface/80 hover:border-brand-primary/30 md:inline-flex"
           >
             <ShoppingBag size={16} aria-hidden="true" className="text-brand-primary" />

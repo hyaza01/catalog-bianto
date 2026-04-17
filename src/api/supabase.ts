@@ -23,7 +23,7 @@ const fetchWithoutCache: typeof fetch = async (input, init = {}) => {
 
 if (!hasSupabaseEnv) {
   console.warn(
-    'Variaveis VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY ausentes no build atual. A aplicacao carregara com cliente Supabase placeholder.',
+    'Variáveis VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY ausentes no build atual. A aplicação carregará com cliente Supabase placeholder.',
   )
 }
 

@@ -22,10 +22,10 @@ import { ContactLogo, type ContactKind } from '../components/common/ContactLogo'
 import { DEFAULT_PRODUCT_IMAGE } from '../utils/constants'
 
 const categoryDescriptions: Record<string, string> = {
-  canecas: 'Modelos classicos e premium para presentear.',
-  'garrafas-termicas': 'Termicas duraveis para rotina e eventos.',
+  canecas: 'Modelos clássicos e premium para presentear.',
+  'garrafas-termicas': 'Térmicas duráveis para rotina e eventos.',
   copos: 'Copos modernos para brindes e festas.',
-  'kits-especiais': 'Combinacoes prontas para encantar clientes.',
+  'kits-especiais': 'Combinações prontas para encantar clientes.',
   outros: 'Outros itens personalizados sob consulta.',
 }
 
@@ -313,7 +313,7 @@ export const HomePage = () => {
                 size="lg"
                 variant="primary"
                 onClick={() => navigate('/catalogo')}
-                aria-label="Navegar para o catalogo"
+                aria-label="Navegar para o catálogo"
                 className="shadow-lg shadow-brand-primary/30"
               >
                 Ver Catálogo
@@ -371,7 +371,7 @@ export const HomePage = () => {
 
         {!isLoadingCategories && categoriesError && (
           <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-900">
-            Nao foi possivel carregar categorias agora: {categoriesError}
+            Não foi possível carregar categorias agora: {categoriesError}
           </div>
         )}
 
@@ -489,7 +489,7 @@ export const HomePage = () => {
 
             {!isLoading && productsError && (
               <article className="w-[260px] min-w-[260px] flex-none snap-start overflow-hidden rounded-2xl border border-amber-200 bg-amber-50 p-4 shadow-sm">
-                <p className="text-sm text-amber-900">Nao foi possivel carregar os produtos: {productsError}</p>
+                <p className="text-sm text-amber-900">Não foi possível carregar os produtos: {productsError}</p>
               </article>
             )}
 
@@ -628,7 +628,7 @@ export const HomePage = () => {
                   return
                 }
 
-                window.alert('Configure um canal de contato no Admin para habilitar este botao.')
+                window.alert('Configure um canal de contato no Admin para habilitar este botão.')
               }}
               aria-label="Abrir contato direto no WhatsApp"
             >

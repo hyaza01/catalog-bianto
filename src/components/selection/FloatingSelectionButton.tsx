@@ -40,7 +40,7 @@ export const FloatingSelectionButton = ({
     <button
       type="button"
       onClick={onClick}
-      aria-label="Abrir painel de selecao"
+      aria-label="Abrir painel de seleção"
       className={cn(
         'fixed bottom-4 right-4 z-40 inline-flex h-12 w-12 items-center justify-center rounded-full bg-brand-primary text-white shadow-xl transition-all duration-300 hover:scale-105 hover:bg-brand-primary2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary md:bottom-6 md:right-6 md:h-14 md:w-14',
         mobileVisible ? 'inline-flex' : 'hidden',

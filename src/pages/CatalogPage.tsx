@@ -30,9 +30,9 @@ const QUERY_KEYS = {
 } as const
 
 const SORT_LABELS: Record<CatalogSort, string> = {
-  relevance: 'Relevancia',
-  price_asc: 'Menor preco',
-  price_desc: 'Maior preco',
+  relevance: 'Relevância',
+  price_asc: 'Menor preço',
+  price_desc: 'Maior preço',
   name_asc: 'Nome (A-Z)',
   name_desc: 'Nome (Z-A)',
 }
@@ -369,7 +369,7 @@ export const CatalogPage = () => {
     if (filters.onlyAvailable) {
       chips.push({
         id: 'available',
-        label: 'Apenas disponiveis',
+        label: 'Apenas disponíveis',
         onRemove: () => handleOnlyAvailableChange(false),
       })
     }
@@ -430,7 +430,7 @@ export const CatalogPage = () => {
         </p>
         {publicCategoriesError && (
           <p className="mt-1.5 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-900">
-            Nao foi possivel carregar categorias cadastradas: {publicCategoriesError}
+            Não foi possível carregar categorias cadastradas: {publicCategoriesError}
           </p>
         )}
       </div>
@@ -500,7 +500,7 @@ export const CatalogPage = () => {
             </div>
           ) : error ? (
             <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-sm text-red-700">
-              Nao foi possivel carregar os produtos agora. Tente novamente em instantes.
+              Não foi possível carregar os produtos agora. Tente novamente em instantes.
             </div>
           ) : (
             <ProductGrid

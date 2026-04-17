@@ -54,7 +54,7 @@ export const SelectionDrawer = ({ isOpen, onClose }: SelectionDrawerProps) => {
     const sent = sendSelectionToWhatsApp(detailedItems, targetWhatsAppNumber)
 
     if (!sent) {
-      window.alert('Nao foi possivel abrir o WhatsApp. Defina o numero no Admin em Configuracoes do Site.')
+      window.alert('Não foi possível abrir o WhatsApp. Defina o número no Admin em Configurações do Site.')
     }
   }
 
@@ -74,7 +74,7 @@ export const SelectionDrawer = ({ isOpen, onClose }: SelectionDrawerProps) => {
           'fixed right-0 top-0 z-50 h-full w-full max-w-md transform border-l border-brand-text/10 bg-white shadow-2xl transition-transform duration-300',
           isOpen ? 'translate-x-0' : 'translate-x-full',
         )}
-        aria-label="Painel de selecao de produtos"
+        aria-label="Painel de seleção de produtos"
       >
         <div className="flex h-full flex-col">
           <header className="flex items-center justify-between border-b border-brand-surface px-4 py-4 sm:px-5">
@@ -86,7 +86,7 @@ export const SelectionDrawer = ({ isOpen, onClose }: SelectionDrawerProps) => {
               type="button"
               onClick={onClose}
               className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-brand-surface text-brand-primary transition-all duration-200 hover:border-brand-primary/30 hover:text-brand-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
-              aria-label="Fechar painel de selecao"
+              aria-label="Fechar painel de seleção"
             >
               <X size={18} aria-hidden="true" />
             </button>
@@ -186,7 +186,7 @@ export const SelectionDrawer = ({ isOpen, onClose }: SelectionDrawerProps) => {
                       Observação
                       <textarea
                         id={`note-${item.productId}`}
-                        aria-label={`Observacao para ${item.product.name}`}
+                        aria-label={`Observação para ${item.product.name}`}
                         value={item.note}
                         onChange={(event) => updateNote(item.productId, event.target.value)}
                         rows={2}
@@ -213,7 +213,7 @@ export const SelectionDrawer = ({ isOpen, onClose }: SelectionDrawerProps) => {
                 }}
                 disabled={detailedItems.length === 0}
                 fullWidth
-                aria-label="Exportar selecao para PDF"
+                aria-label="Exportar seleção para PDF"
               >
                 <FileDown size={16} aria-hidden="true" />
                 Exportar PDF
@@ -223,7 +223,7 @@ export const SelectionDrawer = ({ isOpen, onClose }: SelectionDrawerProps) => {
                 onClick={handleWhatsAppSend}
                 disabled={detailedItems.length === 0}
                 fullWidth
-                aria-label="Enviar selecao pelo WhatsApp"
+                aria-label="Enviar seleção pelo WhatsApp"
               >
                 <MessageCircle size={16} aria-hidden="true" />
                 Enviar pelo WhatsApp

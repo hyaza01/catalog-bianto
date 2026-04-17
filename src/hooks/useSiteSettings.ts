@@ -51,17 +51,17 @@ const defaultSettings: SiteSettings = {
     heroBadge: 'Catalogo Premium',
     heroTitle: 'Bianto Store',
     heroSubtitle: 'Personalizados que marcam momentos',
-    heroDescription: 'Canecas personalizadas e kits especiais com design sofisticado para presentes corporativos e datas memoraveis.',
+    heroDescription: 'Canecas personalizadas e kits especiais com design sofisticado para presentes corporativos e datas memoráveis.',
     benefitsTitle1: 'Kits assinatura',
-    benefitsDesc1: 'Monte kits elegantes combinando garrafas, canecas e brindes extras com personalizacao completa.',
-    benefitsTitle2: 'Personalizacao total',
-    benefitsDesc2: 'Selecione cores, rotulos e caixas sob medida para comunicar perfeitamente a sua marca.',
+    benefitsDesc1: 'Monte kits elegantes combinando garrafas, canecas e brindes extras com personalização completa.',
+    benefitsTitle2: 'Personalização total',
+    benefitsDesc2: 'Selecione cores, rótulos e caixas sob medida para comunicar perfeitamente a sua marca.',
     benefitsTitle3: 'Acabamento premium',
     benefitsDesc3: 'Produtos testados e finalizados com rigor para entregar um material que dure anos.',
-    navTitle: 'Navegacao rapida',
+    navTitle: 'Navegação rápida',
     categoriesTitle: 'Categorias em destaque',
     productsTitle: 'Produtos em destaque',
-    buttonCatalog: 'Ver catalogo completo',
+    buttonCatalog: 'Ver catálogo completo',
   },
 }
 
@@ -114,16 +114,16 @@ type SiteSettingsRowPayload = SiteSettingsRow | Record<string, unknown>
 
 const mapSiteSettingsError = (errorLike: SiteSettingsDbError | null | undefined): string => {
   const code = errorLike?.code ?? ''
-  const message = errorLike?.message ?? 'Nao foi possivel carregar as configuracoes do site.'
+  const message = errorLike?.message ?? 'Não foi possível carregar as configurações do site.'
   const details = errorLike?.details ?? ''
   const combined = `${message} ${details}`.toLowerCase()
 
   if (code === '42P01' || /relation|does not exist|site_settings/.test(combined)) {
-    return 'Tabela site_settings nao encontrada. Rode o SQL em supabase/policies/site_settings_rls.sql para habilitar as configuracoes do site. Sem essa tabela, as alteracoes do Admin nao sincronizam entre dispositivos.'
+    return 'Tabela site_settings não encontrada. Rode o SQL em supabase/policies/site_settings_rls.sql para habilitar as configurações do site. Sem essa tabela, as alterações do Admin não sincronizam entre dispositivos.'
   }
 
   if (code === '42501' || /row-level security|permission denied|policy/.test(combined)) {
-    return 'Sem permissao para alterar configuracoes do site (RLS). Rode o SQL em supabase/policies/site_settings_rls.sql. Sem essa permissao, as alteracoes nao serao compartilhadas para outros dispositivos.'
+    return 'Sem permissão para alterar configurações do site (RLS). Rode o SQL em supabase/policies/site_settings_rls.sql. Sem essa permissão, as alterações não serão compartilhadas para outros dispositivos.'
   }
 
   return message
@@ -232,11 +232,11 @@ const triggerSettingsCacheInvalidationWebhook = async (): Promise<void> => {
 
     if (!response.ok) {
       console.warn(
-        `Webhook de invalidacao de cache respondeu com status ${response.status}. Verifique a integracao de purge na infraestrutura.`,
+        `Webhook de invalidação de cache respondeu com status ${response.status}. Verifique a integração de purge na infraestrutura.`,
       )
     }
   } catch {
-    console.warn('Falha ao chamar webhook de invalidacao de cache. Verifique a infraestrutura CDN/SSR.')
+    console.warn('Falha ao chamar webhook de invalidação de cache. Verifique a infraestrutura CDN/SSR.')
   }
 }
 

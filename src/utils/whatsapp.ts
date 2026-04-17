@@ -20,7 +20,7 @@ export const buildDirectWhatsAppMessage = (): string => {
   lines.push('Ola! Vim pelo site da Bianto Store e gostaria de atendimento.')
 
   lines.push('Tenho interesse em produtos personalizados e kits sob medida.')
-  lines.push('Podem me enviar opcoes, valores e prazo de producao?')
+  lines.push('Podem me enviar opções, valores e prazo de produção?')
 
   return lines.join('\n')
 }
@@ -35,7 +35,7 @@ export const buildWhatsAppMessage = (items: SelectionItemDetailed[], totalValue?
   lines.push('')
 
   items.forEach((item, index) => {
-    const observation = item.note.trim().length > 0 ? ` | Observacao: ${item.note.trim()}` : ''
+    const observation = item.note.trim().length > 0 ? ` | Observação: ${item.note.trim()}` : ''
     const subtotal = item.product.price * item.quantity
     lines.push(
       `${index + 1}. *${item.product.name}* - Qtd: ${item.quantity} | Unit: ${formatBRL(item.product.price)} | Subtotal: ${formatBRL(subtotal)}${observation}`,
@@ -47,7 +47,7 @@ export const buildWhatsAppMessage = (items: SelectionItemDetailed[], totalValue?
   lines.push('')
   lines.push('Podem confirmar, por favor:')
   lines.push('- valor final do pedido')
-  lines.push('- prazo de producao')
+  lines.push('- prazo de produção')
   lines.push('- formas de pagamento')
 
   return lines.join('\n')

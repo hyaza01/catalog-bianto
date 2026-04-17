@@ -13,7 +13,7 @@ const blobToDataUrl = (blob: Blob): Promise<string> => {
         return
       }
 
-      reject(new Error('Nao foi possivel converter a imagem para base64.'))
+      reject(new Error('Não foi possível converter a imagem para base64.'))
     }
 
     reader.onerror = () => {
@@ -64,7 +64,7 @@ const drawImageSlot = (
     doc.setTextColor(100, 116, 139)
     doc.setFontSize(8)
     doc.text('Imagem', x + width / 2, y + height / 2 - 1, { align: 'center' })
-    doc.text('indisponivel', x + width / 2, y + height / 2 + 3, { align: 'center' })
+    doc.text('indisponível', x + width / 2, y + height / 2 + 3, { align: 'center' })
     return
   }
 
@@ -88,7 +88,7 @@ const measureCardHeight = (doc: jsPDF, item: SelectionItemDetailed, contentWidth
   doc.setFontSize(12)
   const titleLines = doc.splitTextToSize(item.product.name, contentWidth)
 
-  const noteValue = item.note.trim().length > 0 ? item.note.trim() : 'Sem observacao.'
+  const noteValue = item.note.trim().length > 0 ? item.note.trim() : 'Sem observação.'
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(8.5)
   const noteLines = doc.splitTextToSize(noteValue, cardWidth - 16)
@@ -124,8 +124,8 @@ export const exportSelectionToPdf = async (items: SelectionItemDetailed[]): Prom
 
   doc.setFontSize(10)
   doc.setTextColor(71, 85, 105)
-  doc.text(`Data de geracao: ${formatDatePtBr(now)}`, margin, 25)
-  doc.text('Preview visual da selecao', margin, 30)
+  doc.text(`Data de geração: ${formatDatePtBr(now)}`, margin, 25)
+  doc.text('Preview visual da seleção', margin, 30)
 
   const imageCache = new Map<string, string | null>()
   const cardX = margin
@@ -198,7 +198,7 @@ export const exportSelectionToPdf = async (items: SelectionItemDetailed[]): Prom
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(8)
     doc.setTextColor(71, 85, 105)
-    doc.text('Observacao', cardX + 6, noteY + 4)
+    doc.text('Observação', cardX + 6, noteY + 4)
 
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(8.5)
