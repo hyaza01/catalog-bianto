@@ -2,6 +2,16 @@ interface FloatingOrbsProps {
   className?: string
 }
 
+/**
+ * Decorative animated gradient orbs for hero/section backgrounds.
+ * Renders four blurred circles that slowly drift using CSS keyframe animations,
+ * creating a soft depth effect. Pass an optional `className` to override
+ * positioning or sizing on the container element.
+ *
+ * Animations are automatically suppressed when the user has requested
+ * reduced motion via the `prefers-reduced-motion` media feature.
+ */
+
 export const FloatingOrbs = ({ className }: FloatingOrbsProps) => (
   <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className ?? ''}`} aria-hidden="true">
     <div

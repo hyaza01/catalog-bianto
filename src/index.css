@@ -106,3 +106,12 @@
 .animate-float-fast {
   animation: float-fast 10s ease-in-out infinite;
 }
+
+/* Respect user's reduced-motion preference for orb animations */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-slow,
+  .animate-float-medium,
+  .animate-float-fast {
+    animation: none;
+  }
+}
