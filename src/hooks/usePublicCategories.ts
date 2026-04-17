@@ -173,7 +173,7 @@ const fetchPublicCategories = async (): Promise<PublicCategory[]> => {
         break
       }
 
-      queryError = { message: result.error.message || 'Nao foi possivel carregar as categorias.' }
+      queryError = { message: result.error.message || 'Não foi possível carregar as categorias.' }
 
       if (!isMissingColumnError(queryError.message)) {
         break
@@ -181,7 +181,7 @@ const fetchPublicCategories = async (): Promise<PublicCategory[]> => {
     }
 
     if (queryError) {
-      throw new Error(queryError.message || 'Nao foi possivel carregar as categorias.')
+      throw new Error(queryError.message || 'Não foi possível carregar as categorias.')
     }
 
     return applyFeaturedFallbacks(

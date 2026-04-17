@@ -7,7 +7,7 @@ export const garrafasTermicas: Product[] = [
     name: 'Garrafa Termica Premium 500ml',
     description: {
       short: 'Parede dupla para manter temperatura por horas.',
-      long: 'Perfeita para kits executivos. Mantem bebidas quentes ou geladas por longos periodos e permite gravacao a laser com alta durabilidade.',
+      long: 'Perfeita para kits executivos. Mantém bebidas quentes ou geladas por longos períodos e permite gravação a laser com alta durabilidade.',
     },
     category: 'garrafas-termicas',
     price: 89.9,
@@ -28,8 +28,8 @@ export const garrafasTermicas: Product[] = [
     id: 'a3901d99-b136-44d6-8b16-7f6890055329',
     name: 'Garrafa Travel Slim 450ml',
     description: {
-      short: 'Leve e compacta para uso diario.',
-      long: 'Modelo slim para academias e rotinas externas. Possui tampa anti-vazamento e area frontal para aplicacao de nome ou marca.',
+      short: 'Leve e compacta para uso diário.',
+      long: 'Modelo slim para academias e rotinas externas. Possui tampa anti-vazamento e área frontal para aplicação de nome ou marca.',
     },
     category: 'garrafas-termicas',
     price: 74.5,

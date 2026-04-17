@@ -234,7 +234,7 @@ const uploadProductImage = async (file: File, slug: string): Promise<string> => 
   const { data } = supabase.storage.from(imageBucket).getPublicUrl(path)
 
   if (!data.publicUrl) {
-    throw new Error('Nao foi possivel gerar URL publica da imagem enviada.')
+    throw new Error('Não foi possível gerar URL pública da imagem enviada.')
   }
 
   return data.publicUrl
@@ -496,7 +496,7 @@ export const AdminPage = () => {
 
     if (productsError) {
       setManagedProducts([])
-      setError(productsError.message || 'Nao foi possivel carregar produtos cadastrados.')
+      setError(productsError.message || 'Não foi possível carregar produtos cadastrados.')
       setIsLoadingProducts(false)
       return
     }
@@ -642,7 +642,7 @@ export const AdminPage = () => {
     const text = description.trim()
 
     if (!text) {
-      return 'Descricao curta do produto para visualizacao no card do catalogo.'
+      return 'Descrição curta do produto para visualização no card do catálogo.'
     }
 
     const firstLine =
@@ -751,7 +751,7 @@ export const AdminPage = () => {
   const handleDeleteSelected = async () => {
     if (selectedProductIds.size === 0) return
     
-    if (!window.confirm(`Deseja realmente remover os ${selectedProductIds.size} produtos selecionados? ESSA ACAO E IRREVERSIVEL.`)) {
+    if (!window.confirm(`Deseja realmente remover os ${selectedProductIds.size} produtos selecionados? ESSA AÇÃO É IRREVERSÍVEL.`)) {
       return
     }
 
@@ -837,7 +837,7 @@ export const AdminPage = () => {
       setSelectedProductIds(new Set())
       await loadProducts()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro inesperado ao aplicar edicao em lote.')
+      setError(err instanceof Error ? err.message : 'Erro inesperado ao aplicar edição em lote.')
     } finally {
       setIsSubmitting(false)
     }
@@ -993,7 +993,7 @@ export const AdminPage = () => {
       const normalizedName = cleanName.toLocaleLowerCase('pt-BR')
 
       if (!cleanName || !generatedSlug) {
-        throw new Error('Informe um nome valido para a categoria.')
+        throw new Error('Informe um nome válido para a categoria.')
       }
 
       const categoryWithSameName = categories.some(
@@ -1005,7 +1005,7 @@ export const AdminPage = () => {
       )
 
       if (categoryWithSameName || categoryWithSameSlug) {
-        throw new Error('Essa categoria ja existe. Escolha outro nome.')
+        throw new Error('Essa categoria já existe. Escolha outro nome.')
       }
 
       const createdCategory = await createCategory({
@@ -1153,7 +1153,7 @@ export const AdminPage = () => {
         categoryDeleteError instanceof Error ? categoryDeleteError.message : 'Erro ao excluir categoria.'
 
       if (/foreign|constraint|violates|referential/i.test(categoryMessage)) {
-        setError('Nao foi possivel excluir a categoria porque existem produtos vinculados a ela.')
+        setError('Não foi possível excluir a categoria porque existem produtos vinculados a ela.')
       } else {
         setError(categoryMessage)
       }
@@ -1201,12 +1201,12 @@ export const AdminPage = () => {
 
       await saveSettings(normalized)
       setSiteSettingsForm(normalized)
-      setMessage('Configuracoes do site salvas com sucesso.')
+      setMessage('Configurações do site salvas com sucesso.')
     } catch (siteSettingsSaveError) {
       const errorMessage =
         siteSettingsSaveError instanceof Error
           ? siteSettingsSaveError.message
-          : 'Nao foi possivel salvar as configuracoes do site.'
+          : 'Não foi possível salvar as configurações do site.'
       setError(errorMessage)
     } finally {
       setIsSavingSiteSettings(false)
@@ -1581,7 +1581,7 @@ export const AdminPage = () => {
                   size="sm"
                   onClick={handleClearProductDeletionHistory}
                   disabled={productDeletionHistory.length === 0}
-                  aria-label="Limpar historico de delecao de produtos"
+                  aria-label="Limpar histórico de deleção de produtos"
                   className={buttonFocusClassName}
                 >
                   Limpar
@@ -1630,8 +1630,8 @@ export const AdminPage = () => {
                   <h2 className="font-display text-3xl text-[#2B2B2B]">{isEditMode ? 'Editar produto' : 'Novo produto'}</h2>
                   <p className="mt-1 text-sm text-slate-600">
                     {isEditMode
-                      ? 'Atualize os campos desejados e salve as alteracoes.'
-                      : 'Preencha as secoes abaixo para cadastrar um novo produto.'}
+                      ? 'Atualize os campos desejados e salve as alterações.'
+                      : 'Preencha as seções abaixo para cadastrar um novo produto.'}
                   </p>
                 </div>
                 {isEditMode && (
@@ -1639,11 +1639,11 @@ export const AdminPage = () => {
                     variant="outline"
                     size="sm"
                     onClick={handleCancelEdit}
-                    aria-label="Cancelar modo de edicao"
+                    aria-label="Cancelar modo de edição"
                     className={buttonFocusClassName}
                   >
                     <XCircle size={14} aria-hidden="true" />
-                    Cancelar edicao
+                    Cancelar edição
                   </Button>
                 )}
               </div>
@@ -1678,14 +1678,14 @@ export const AdminPage = () => {
                     </label>
 
                     <label className="grid gap-1 text-sm font-medium text-slate-700" htmlFor="product-description">
-                      Descricao
+                      Descrição
                       <textarea
                         id="product-description"
                         value={description}
                         onChange={(event) => setDescription(event.target.value)}
                         required
                         rows={4}
-                        aria-label="Descricao do produto"
+                        aria-label="Descrição do produto"
                         className={textAreaClassName}
                       />
                     </label>
@@ -1916,18 +1916,18 @@ export const AdminPage = () => {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    aria-label={isEditMode ? 'Salvar alteracoes do produto' : 'Criar novo produto'}
+                    aria-label={isEditMode ? 'Salvar alterações do produto' : 'Criar novo produto'}
                     className={buttonFocusClassName}
                   >
                     <PlusCircle size={16} aria-hidden="true" />
-                    {isSubmitting ? 'Salvando...' : isEditMode ? 'Salvar alteracoes' : 'Criar produto'}
+                    {isSubmitting ? 'Salvando...' : isEditMode ? 'Salvar alterações' : 'Criar produto'}
                   </Button>
                   {isEditMode && (
                     <Button
                       type="button"
                       variant="outline"
                       onClick={handleCancelEdit}
-                      aria-label="Cancelar alteracoes"
+                      aria-label="Cancelar alterações"
                       className={buttonFocusClassName}
                     >
                       <XCircle size={16} aria-hidden="true" />
@@ -1940,7 +1940,7 @@ export const AdminPage = () => {
 
             <aside className={`self-start lg:sticky lg:top-24 ${cardClassName}`}>
               <h3 className="font-display text-2xl text-[#2B2B2B]">Preview do Produto</h3>
-              <p className="mt-1 text-sm text-slate-600">Visual aproximado do card no catalogo publico.</p>
+              <p className="mt-1 text-sm text-slate-600">Visual aproximado do card no catálogo público.</p>
 
               <article className="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                 <div className={`relative aspect-[4/3] overflow-hidden ${!isAvailable ? 'opacity-70' : ''}`}>
@@ -1982,7 +1982,7 @@ export const AdminPage = () => {
             <section className={`${cardClassName}`}>
               <h2 className="font-display text-3xl text-[#2B2B2B]">Nova categoria</h2>
               <p className="mt-1 text-sm text-slate-600">
-                Informe o nome da categoria. O slug sera gerado automaticamente.
+                Informe o nome da categoria. O slug será gerado automaticamente.
               </p>
 
               <form className="mt-5 space-y-4" onSubmit={handleCreateCategory}>
@@ -2150,7 +2150,7 @@ export const AdminPage = () => {
 
               {siteSettingsError && (
                 <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                  Falha ao carregar configuracoes: {siteSettingsError}
+                  Falha ao carregar configurações: {siteSettingsError}
                 </div>
               )}
 
@@ -2424,9 +2424,9 @@ export const AdminPage = () => {
                     type="submit"
                     disabled={isSavingSiteSettings || isLoadingSiteSettings}
                     className={buttonFocusClassName}
-                    aria-label="Salvar configuracoes do site"
+                    aria-label="Salvar configurações do site"
                   >
-                    {isSavingSiteSettings ? 'Salvando...' : 'Salvar configuracoes'}
+                    {isSavingSiteSettings ? 'Salvando...' : 'Salvar configurações'}
                   </Button>
                   <Button
                     type="button"
@@ -2434,7 +2434,7 @@ export const AdminPage = () => {
                     onClick={() => void reloadSiteSettings()}
                     disabled={isSavingSiteSettings || isLoadingSiteSettings}
                     className={buttonFocusClassName}
-                    aria-label="Recarregar configuracoes do site"
+                    aria-label="Recarregar configurações do site"
                   >
                     <RefreshCw size={14} aria-hidden="true" />
                     Recarregar
@@ -2445,23 +2445,23 @@ export const AdminPage = () => {
 
             <aside className={`${cardClassName} self-start`}>
               <h3 className="font-display text-2xl text-[#2B2B2B]">Preview dos contatos</h3>
-              <p className="mt-1 text-sm text-slate-600">Assim os dados aparecem para o cliente na pagina inicial.</p>
+              <p className="mt-1 text-sm text-slate-600">Assim os dados aparecem para o cliente na página inicial.</p>
 
               <div className="mt-4 space-y-2 text-sm">
                 <p className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700">
-                  WhatsApp: {siteSettingsForm.whatsappNumber || 'Nao informado'}
+                  WhatsApp: {siteSettingsForm.whatsappNumber || 'Não informado'}
                 </p>
                 <p className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700">
-                  Telefone: {siteSettingsForm.contactPhone || 'Nao informado'}
+                  Telefone: {siteSettingsForm.contactPhone || 'Não informado'}
                 </p>
                 <p className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700">
-                  Email: {siteSettingsForm.contactEmail || 'Nao informado'}
+                  Email: {siteSettingsForm.contactEmail || 'Não informado'}
                 </p>
                 <p className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700">
-                  Instagram: {siteSettingsForm.instagramUrl || 'Nao informado'}
+                  Instagram: {siteSettingsForm.instagramUrl || 'Não informado'}
                 </p>
                 <p className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700">
-                  Link alternativo: {siteSettingsForm.supportLink || 'Nao informado'}
+                  Link alternativo: {siteSettingsForm.supportLink || 'Não informado'}
                 </p>
               </div>
             </aside>
@@ -2480,7 +2480,7 @@ export const AdminPage = () => {
               className="fixed left-1/2 top-1/2 z-[80] w-[calc(100%-1.5rem)] max-w-xl -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl sm:p-6"
               role="dialog"
               aria-modal="true"
-              aria-label="Confirmacao de exclusao"
+              aria-label="Confirmação de exclusão"
             >
               <div className="flex items-start gap-3">
                 <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#5F6F5A]/10 text-[#5F6F5A]">
@@ -2493,7 +2493,7 @@ export const AdminPage = () => {
 
                   {deleteProductTarget && (
                     <p className="mt-2 text-sm text-slate-600">
-                      Deseja realmente remover o produto <strong>{deleteProductTarget.name}</strong>? Essa acao nao pode ser desfeita.
+                      Deseja realmente remover o produto <strong>{deleteProductTarget.name}</strong>? Essa ação não pode ser desfeita.
                     </p>
                   )}
 
@@ -2504,10 +2504,10 @@ export const AdminPage = () => {
                       </p>
                       {deleteCategoryTarget.linkedProducts > 0 ? (
                         <p className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-amber-800">
-                          Esta categoria sera removida de {deleteCategoryTarget.linkedProducts} produto(s). Os produtos serao movidos automaticamente para uma categoria de fallback para concluir a exclusao.
+                          Esta categoria será removida de {deleteCategoryTarget.linkedProducts} produto(s). Os produtos serão movidos automaticamente para uma categoria de fallback para concluir a exclusão.
                         </p>
                       ) : (
-                        <p>Essa categoria nao possui produtos vinculados.</p>
+                        <p>Essa categoria não possui produtos vinculados.</p>
                       )}
                     </div>
                   )}
@@ -2547,7 +2547,7 @@ export const AdminPage = () => {
             <div className="mb-4">
               <h2 className="text-xl font-bold text-navy">Editar ({selectedProductIds.size}) Produtos em Massa</h2>
               <p className="mt-1 text-sm text-slate-500">
-                Os campos que voce deixar como "Sem mudanca" nao alterarao os valores originais dos produtos.
+                Os campos que você deixar como "Sem mudança" não alterarão os valores originais dos produtos.
               </p>
             </div>
 
@@ -2560,8 +2560,8 @@ export const AdminPage = () => {
                   className={fieldClassName}
                 >
                   <option value="unchanged">Manter valor atual</option>
-                  <option value="true">Disponivel</option>
-                  <option value="false">Indisponivel</option>
+                  <option value="true">Disponível</option>
+                  <option value="false">Indisponível</option>
                 </select>
               </label>
 
@@ -2574,7 +2574,7 @@ export const AdminPage = () => {
                 >
                   <option value="unchanged">Manter valor atual</option>
                   <option value="true">Sim (Destacar)</option>
-                  <option value="false">Nao</option>
+                  <option value="false">Não</option>
                 </select>
               </label>
 
@@ -2602,7 +2602,7 @@ export const AdminPage = () => {
                   Cancelar
                 </Button>
                 <Button type="submit" variant="primary" disabled={isSubmitting}>
-                  {isSubmitting ? 'Salvando...' : 'Aplicar alteracoes'}
+                  {isSubmitting ? 'Salvando...' : 'Aplicar alterações'}
                 </Button>
               </div>
             </form>

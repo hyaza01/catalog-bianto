@@ -118,25 +118,25 @@ const isMissingFeaturedColumnError = (errorLike: CategoryDbError | null | undefi
 const mapCategoriesError = (errorLike: CategoryDbError | string | null | undefined): string => {
   const normalizedError = typeof errorLike === 'string' ? { message: errorLike } : errorLike ?? {}
 
-  const message = normalizedError.message ?? 'Nao foi possivel concluir a operacao em categorias.'
+  const message = normalizedError.message ?? 'Não foi possível concluir a operação em categorias.'
   const details = normalizedError.details ?? ''
   const code = normalizedError.code ?? ''
   const combined = `${message} ${details}`.toLowerCase()
 
   if (code === '23505' || /duplicate key|unique constraint|already exists/.test(combined)) {
-    return 'Ja existe uma categoria com esse nome ou slug. Escolha outro nome.'
+    return 'Já existe uma categoria com esse nome ou slug. Escolha outro nome.'
   }
 
   if (code === '23503' || /foreign key|constraint|referential/.test(combined)) {
-    return 'Nao foi possivel excluir a categoria porque existem produtos vinculados a ela.'
+    return 'Não foi possível excluir a categoria porque existem produtos vinculados a ela.'
   }
 
   if (code === '42501' || /row-level security|permission denied|policy/.test(combined)) {
-    return 'Sem permissao para alterar categorias no Supabase (RLS). Rode o SQL em supabase/policies/categories_rls.sql para liberar o acesso do admin autenticado.'
+    return 'Sem permissão para alterar categorias no Supabase (RLS). Rode o SQL em supabase/policies/categories_rls.sql para liberar o acesso do admin autenticado.'
   }
 
   if (code === '42703' || /is_featured|schema cache|could not find/.test(combined)) {
-    return 'Coluna is_featured nao encontrada em categories. Rode o SQL em supabase/policies/categories_featured.sql para habilitar destaque por categoria.'
+    return 'Coluna is_featured não encontrada em categories. Rode o SQL em supabase/policies/categories_featured.sql para habilitar destaque por categoria.'
   }
 
   return message
@@ -221,7 +221,7 @@ export const useCategories = (): UseCategoriesResult => {
       }
     }
 
-    throw new Error('Categoria nao foi encontrada para atualizacao. Ela pode ter sido removida. Atualize a lista.')
+    throw new Error('Categoria não foi encontrada para atualização. Ela pode ter sido removida. Atualize a lista.')
   }, [])
 
   const reload = useCallback(async () => {

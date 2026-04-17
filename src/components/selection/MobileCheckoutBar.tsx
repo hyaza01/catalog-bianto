@@ -29,7 +29,7 @@ export const MobileCheckoutBar = ({
     const whatsappUrl = generateWhatsAppLink(items, totalValue, whatsappNumber)
 
     if (!whatsappUrl) {
-      window.alert('Nao foi possivel abrir o WhatsApp. Defina o numero no Admin em Configuracoes do Site.')
+      window.alert('Não foi possível abrir o WhatsApp. Defina o número no Admin em Configurações do Site.')
       return
     }
 
@@ -42,7 +42,7 @@ export const MobileCheckoutBar = ({
         <button
           type="button"
           onClick={onOpenSelection}
-          aria-label="Abrir resumo da selecao"
+          aria-label="Abrir resumo da seleção"
           className="min-w-0 flex-1 text-left"
         >
           <p className="truncate text-xs text-brand-primary">{totalItems} itens na seleção</p>

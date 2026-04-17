@@ -5,9 +5,9 @@ import { cn } from '../../utils/cn'
 import { formatBRL } from '../../utils/format'
 
 const SORT_OPTIONS: Array<{ value: CatalogSort; label: string }> = [
-  { value: 'relevance', label: 'Relevancia' },
-  { value: 'price_asc', label: 'Menor preco' },
-  { value: 'price_desc', label: 'Maior preco' },
+  { value: 'relevance', label: 'Relevância' },
+  { value: 'price_asc', label: 'Menor preço' },
+  { value: 'price_desc', label: 'Maior preço' },
   { value: 'name_asc', label: 'Nome (A-Z)' },
   { value: 'name_desc', label: 'Nome (Z-A)' },
 ]
@@ -167,7 +167,7 @@ export const CatalogFilters = ({
               onChange={(event) => handleMinSliderChange(Number(event.target.value))}
               onMouseUp={commitMinSlider}
               onTouchEnd={commitMinSlider}
-              aria-label="Faixa de preco minima"
+              aria-label="Faixa de preço mínima"
               className="cursor-pointer accent-brand-primary transition-all duration-200"
             />
           </label>
@@ -185,7 +185,7 @@ export const CatalogFilters = ({
               onChange={(event) => handleMaxSliderChange(Number(event.target.value))}
               onMouseUp={commitMaxSlider}
               onTouchEnd={commitMaxSlider}
-              aria-label="Faixa de preco maxima"
+              aria-label="Faixa de preço máxima"
               className="cursor-pointer accent-brand-primary transition-all duration-200"
             />
           </label>
@@ -233,7 +233,7 @@ export const CatalogFilters = ({
         >
           <input
             type="checkbox"
-            aria-label="Mostrar apenas produtos disponiveis"
+            aria-label="Mostrar apenas produtos disponíveis"
             checked={filters.onlyAvailable}
             onChange={(event) => onOnlyAvailableChange(event.target.checked)}
             className="h-4 w-4 accent-brand-primary transition-transform duration-200 group-hover:scale-110"

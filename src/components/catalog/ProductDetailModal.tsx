@@ -92,7 +92,7 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
     const description =
       product.description.short?.trim() ||
       product.description.long.trim().slice(0, 150) ||
-      `Conheca ${product.name} no catalogo da Bianto Store.`
+      `Conheça ${product.name} no catálogo da Bianto Store.`
     const pageTitle = `${product.name} | Bianto Store`
     const productUrl = `${window.location.origin}/catalogo?produto=${encodeURIComponent(product.id)}`
 
@@ -203,13 +203,13 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
       {isImageExpanded && (
         <section
           className="fixed inset-0 z-[80] flex items-center justify-center bg-black/90 p-4"
-          aria-label={`Visualizacao expandida da imagem de ${product.name}`}
+          aria-label={`Visualização expandida da imagem de ${product.name}`}
           onClick={() => setIsImageExpanded(false)}
         >
           <button
             type="button"
             onClick={() => setIsImageExpanded(false)}
-            aria-label="Fechar visualizacao expandida da imagem"
+            aria-label="Fechar visualização expandida da imagem"
             className="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-black/40 text-white transition hover:bg-black/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             <X size={20} aria-hidden="true" />
@@ -346,7 +346,7 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
               Observação de personalização
               <textarea
                 id="product-note"
-                aria-label="Informar observacao para personalizacao"
+                aria-label="Informar observação para personalização"
                 rows={3}
                 value={note}
                 onChange={(event) => setNote(event.target.value)}
@@ -394,7 +394,7 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
                   onClose()
                 }}
                 disabled={!product.flags.isAvailable}
-                aria-label="Adicionar produto a selecao"
+                aria-label="Adicionar produto à seleção"
               >
                 <Check size={16} aria-hidden="true" />
                 Adicionar à seleção

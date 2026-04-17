@@ -9,7 +9,7 @@ const mapAuthErrorMessage = (rawMessage: string): string => {
   const normalized = rawMessage.trim().toLowerCase()
 
   if (normalized === 'failed to fetch' || normalized.includes('network') || normalized.includes('fetch')) {
-    return 'Falha de conexao com o servidor de autenticacao. Verifique internet e configuracao do Supabase no deploy.'
+    return 'Falha de conexão com o servidor de autenticação. Verifique internet e configuração do Supabase no deploy.'
   }
 
   return rawMessage
@@ -55,7 +55,7 @@ export const AdminLoginPage = () => {
 
   const handleMagicLinkLogin = async () => {
     if (!email.trim()) {
-      setError('Informe um email para receber o link magico.')
+      setError('Informe um email para receber o link mágico.')
       setMessage(null)
       return
     }
@@ -77,14 +77,14 @@ export const AdminLoginPage = () => {
       return
     }
 
-    setMessage('Link magico enviado. Abra o email e conclua o acesso.')
+    setMessage('Link mágico enviado. Abra o email e conclua o acesso.')
     setIsSubmitting(false)
   }
 
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-paper px-4">
-        <p className="text-sm text-slate-600">Carregando autenticacao...</p>
+        <p className="text-sm text-slate-600">Carregando autenticação...</p>
       </div>
     )
   }
@@ -93,8 +93,8 @@ export const AdminLoginPage = () => {
     return (
       <div className="flex min-h-screen items-center justify-center bg-paper px-4">
         <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h1 className="font-display text-3xl text-navy">Sem permissao</h1>
-          <p className="text-sm text-slate-600">Esta conta nao possui acesso ao painel administrativo.</p>
+          <h1 className="font-display text-3xl text-navy">Sem permissão</h1>
+          <p className="text-sm text-slate-600">Esta conta não possui acesso ao painel administrativo.</p>
           <Button onClick={() => void signOut()} fullWidth aria-label="Sair da conta atual">
             Sair da conta atual
           </Button>
@@ -107,7 +107,7 @@ export const AdminLoginPage = () => {
     <div className="min-h-screen bg-paper px-4 py-10">
       <div className="mx-auto w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="mb-5 space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Area restrita</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Área restrita</p>
           <h1 className="font-display text-4xl text-navy">Login Admin</h1>
           <p className="text-sm text-slate-600">Entre para acessar o painel de cadastro de produtos.</p>
           {configuredAdminEmails.length > 0 && (
@@ -161,9 +161,9 @@ export const AdminLoginPage = () => {
             fullWidth
             disabled={isSubmitting}
             onClick={() => void handleMagicLinkLogin()}
-            aria-label="Enviar link magico de acesso"
+            aria-label="Enviar link mágico de acesso"
           >
-            Receber link magico
+            Receber link mágico
           </Button>
         </form>
 

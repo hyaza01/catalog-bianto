@@ -26,14 +26,14 @@ export const AdminGuard = ({ children }: PropsWithChildren) => {
         <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <h1 className="font-display text-3xl text-navy">Acesso negado</h1>
           <p className="text-sm text-slate-600">
-            O usuario autenticado nao possui permissao para acessar a area admin.
+            O usuário autenticado não possui permissão para acessar a área admin.
           </p>
           {configuredAdminEmails.length > 0 && (
             <p className="rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-500">
               Emails admin esperados: {configuredAdminEmails.join(', ')}
             </p>
           )}
-          <Button onClick={() => void signOut()} fullWidth aria-label="Sair da sessao atual">
+          <Button onClick={() => void signOut()} fullWidth aria-label="Sair da sessão atual">
             Sair desta conta
           </Button>
         </div>

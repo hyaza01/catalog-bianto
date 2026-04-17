@@ -280,7 +280,7 @@ const fetchProducts = async (): Promise<Product[]> => {
     }
 
     if (queryError) {
-      throw new Error(queryError.message || 'Nao foi possivel buscar os produtos no Supabase.')
+      throw new Error(queryError.message || 'Não foi possível buscar os produtos no Supabase.')
     }
 
     const normalized = (rows as ProductRow[] | null)
