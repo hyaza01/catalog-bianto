@@ -286,34 +286,37 @@ export const HomePage = () => {
 
   return (
     <div>
+      {/* Hero Section */}
       <section
-        className="relative overflow-hidden border-b border-navy/10"
+        className="relative overflow-hidden border-b border-brand-text/10"
         style={{
-          backgroundImage: `linear-gradient(120deg, rgba(43, 43, 43, 0.94), rgba(95, 111, 90, 0.86), rgba(122, 143, 115, 0.72)), url(${heroBackground})`,
+          backgroundImage: `linear-gradient(135deg, rgba(43, 43, 43, 0.92), rgba(95, 111, 90, 0.85), rgba(122, 143, 115, 0.75)), url(${heroBackground})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
       >
-        <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-8 lg:py-24">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20" />
+        <div className="relative mx-auto grid w-full max-w-7xl gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:px-8 lg:py-28">
           <div className="space-y-6">
-            <p className="inline-flex rounded-full border border-paper/25 bg-paper/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-paper">
+            <p className="inline-flex rounded-full border border-paper/20 bg-paper/8 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-paper/90 backdrop-blur-sm">
               {siteSettings.content.heroBadge}
             </p>
-            <h1 className="font-display text-5xl leading-tight text-paper sm:text-6xl">
+            <h1 className="font-display text-4xl leading-[1.1] text-paper sm:text-5xl lg:text-6xl">
               {siteSettings.content.heroTitle}
-              <span className="block italic text-paper">{siteSettings.content.heroSubtitle}</span>
+              <span className="mt-1 block text-brand-accent italic">{siteSettings.content.heroSubtitle}</span>
             </h1>
-            <p className="max-w-xl text-base text-paper/85 sm:text-lg">
+            <p className="max-w-xl text-base leading-relaxed text-paper/80 sm:text-lg">
               {siteSettings.content.heroDescription}
             </p>
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3 pt-1">
               <Button
                 size="lg"
                 variant="primary"
                 onClick={() => navigate('/catalogo')}
                 aria-label="Navegar para o catalogo"
+                className="shadow-lg shadow-brand-primary/30"
               >
-                Ver Catalogo
+                Ver Catálogo
                 <ArrowRight size={16} aria-hidden="true" />
               </Button>
               {whatsappLink && (
@@ -322,25 +325,27 @@ export const HomePage = () => {
                   variant="outline"
                   onClick={() => window.open(whatsappLink, '_blank', 'noopener,noreferrer')}
                   aria-label="Falar com a Bianto Store no WhatsApp"
-                  className="border border-white/40 bg-white/5 text-white backdrop-blur-sm hover:bg-white/20 hover:border-white hover:text-white"
+                  className="border-white/30 bg-white/5 text-white backdrop-blur-sm hover:bg-white/15 hover:border-white/50 hover:text-white shadow-none"
                 >
-                  <MessageCircle size={16} className="text-green-400" aria-hidden="true" />
+                  <MessageCircle size={16} className="text-emerald-400" aria-hidden="true" />
                   Falar no WhatsApp
                 </Button>
               )}
             </div>
           </div>
 
-          <div className="rounded-3xl border border-paper/20 bg-paper/10 p-6 backdrop-blur-sm">
-            <p className="text-sm uppercase tracking-[0.18em] text-paper/75">Linha em destaque</p>
-            <h2 className="mt-2 font-display text-4xl text-paper">{siteSettings.content.benefitsTitle1}</h2>
-            <p className="mt-3 text-sm leading-relaxed text-paper/85">
+          <div className="rounded-2xl border border-paper/15 bg-paper/8 p-6 backdrop-blur-md sm:p-7">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-accent">Linha em destaque</p>
+            <h2 className="mt-2 font-display text-3xl text-paper sm:text-4xl">{siteSettings.content.benefitsTitle1}</h2>
+            <p className="mt-3 text-sm leading-relaxed text-paper/80">
               {siteSettings.content.benefitsDesc1}
             </p>
             <div className="mt-5 grid gap-3 text-sm text-paper/90">
-              {[siteSettings.content.benefitsTitle2, 'Pedido rapido via WhatsApp', siteSettings.content.benefitsTitle3].filter(Boolean).map((feature) => (
-                <div key={feature} className="flex items-center gap-2">
-                  <Check size={16} className="text-amber" aria-hidden="true" />
+              {[siteSettings.content.benefitsTitle2, 'Pedido rápido via WhatsApp', siteSettings.content.benefitsTitle3].filter(Boolean).map((feature) => (
+                <div key={feature} className="flex items-center gap-2.5">
+                  <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-accent/20">
+                    <Check size={12} className="text-brand-accent" aria-hidden="true" />
+                  </span>
                   {feature}
                 </div>
               ))}
@@ -349,16 +354,17 @@ export const HomePage = () => {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="mb-6 flex items-end justify-between gap-4">
+      {/* Categories Section */}
+      <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mb-8 flex items-end justify-between gap-4">
           <div>
-            <p className="text-sm uppercase tracking-[0.18em] text-slate-500">{siteSettings.content.navTitle}</p>
-            <h2 className="font-display text-4xl text-navy">{siteSettings.content.categoriesTitle}</h2>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-primary">{siteSettings.content.navTitle}</p>
+            <h2 className="mt-1 font-display text-3xl text-brand-text sm:text-4xl">{siteSettings.content.categoriesTitle}</h2>
           </div>
         </div>
 
         {isLoadingCategories && (
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 text-sm text-slate-500">
+          <div className="rounded-2xl border border-brand-surface bg-white p-5 text-sm text-brand-primary">
             Carregando categorias cadastradas...
           </div>
         )}
@@ -370,7 +376,7 @@ export const HomePage = () => {
         )}
 
         {!isLoadingCategories && !categoriesError && primaryCategories.length === 0 && (
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 text-sm text-slate-600">
+          <div className="rounded-2xl border border-brand-surface bg-white p-5 text-sm text-brand-primary">
             Nenhuma categoria em destaque no momento.
           </div>
         )}
@@ -380,18 +386,18 @@ export const HomePage = () => {
             <button
               type="button"
               onClick={() => scrollCategoriesCarousel('left')}
-              className="absolute left-[-16px] top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-[#D8C8B8] bg-white text-[#5F6F5A] shadow-md transition-colors hover:bg-[#FDFCFB] hover:text-[#2B2B2B] focus:outline-none focus:ring-2 focus:ring-[#5F6F5A]/35 sm:left-[-24px]"
+              className="absolute left-[-12px] top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-xl border border-brand-surface bg-white text-brand-primary shadow-md transition-all duration-200 hover:bg-brand-bg hover:text-brand-text hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-brand-primary/35 sm:left-[-20px]"
               aria-label="Rolar categorias para a esquerda"
             >
-              <ChevronLeft size={24} />
+              <ChevronLeft size={22} />
             </button>
             <button
               type="button"
               onClick={() => scrollCategoriesCarousel('right')}
-              className="absolute right-[-16px] top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-[#D8C8B8] bg-white text-[#5F6F5A] shadow-md transition-colors hover:bg-[#FDFCFB] hover:text-[#2B2B2B] focus:outline-none focus:ring-2 focus:ring-[#5F6F5A]/35 sm:right-[-24px]"
+              className="absolute right-[-12px] top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-xl border border-brand-surface bg-white text-brand-primary shadow-md transition-all duration-200 hover:bg-brand-bg hover:text-brand-text hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-brand-primary/35 sm:right-[-20px]"
               aria-label="Rolar categorias para a direita"
             >
-              <ChevronRight size={24} />
+              <ChevronRight size={22} />
             </button>
 
             <div
@@ -404,7 +410,7 @@ export const HomePage = () => {
                   type="button"
                   onClick={() => navigate(buildCatalogLink({ categoryId: category.id }))}
                   aria-label={`Abrir categoria ${category.name}`}
-                  className="group relative h-64 w-[260px] min-w-[260px] flex-none snap-start overflow-hidden rounded-2xl border border-slate-200 bg-slate-900 text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-crimson/30 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
+                  className="group relative h-64 w-[260px] min-w-[260px] flex-none snap-start overflow-hidden rounded-2xl border border-brand-surface/50 bg-brand-text text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
                   style={{ transitionDelay: `${index * 35}ms` }}
                 >
                   <img
@@ -431,16 +437,17 @@ export const HomePage = () => {
         )}
       </section>
 
-      <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mb-6 flex items-end justify-between gap-4">
+      {/* Featured Products Section */}
+      <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mb-8 flex items-end justify-between gap-4">
           <div>
-            <p className="text-sm uppercase tracking-[0.18em] text-slate-500">Curadoria</p>
-            <h2 className="font-display text-4xl text-navy">{siteSettings.content.productsTitle}</h2>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-primary">Curadoria</p>
+            <h2 className="mt-1 font-display text-3xl text-brand-text sm:text-4xl">{siteSettings.content.productsTitle}</h2>
           </div>
           <Button 
             variant="primary" 
             size="md" 
-            className="flex items-center gap-2 px-6 shadow-md transition-transform hover:-translate-y-0.5"
+            className="flex items-center gap-2 px-6 transition-transform hover:-translate-y-0.5"
             onClick={() => navigate('/catalogo')} 
             aria-label="Ver todos os produtos"
           >
@@ -455,18 +462,18 @@ export const HomePage = () => {
               <button
                 type="button"
                 onClick={() => scrollProductsCarousel('left')}
-                className="absolute left-[-16px] top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-[#D8C8B8] bg-white text-[#5F6F5A] shadow-md transition-colors hover:bg-[#FDFCFB] hover:text-[#2B2B2B] focus:outline-none focus:ring-2 focus:ring-[#5F6F5A]/35 sm:left-[-24px]"
+                className="absolute left-[-12px] top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-xl border border-brand-surface bg-white text-brand-primary shadow-md transition-all duration-200 hover:bg-brand-bg hover:text-brand-text hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-brand-primary/35 sm:left-[-20px]"
                 aria-label="Rolar para a esquerda"
               >
-                <ChevronLeft size={24} />
+                <ChevronLeft size={22} />
               </button>
               <button
                 type="button"
                 onClick={() => scrollProductsCarousel('right')}
-                className="absolute right-[-16px] top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-[#D8C8B8] bg-white text-[#5F6F5A] shadow-md transition-colors hover:bg-[#FDFCFB] hover:text-[#2B2B2B] focus:outline-none focus:ring-2 focus:ring-[#5F6F5A]/35 sm:right-[-24px]"
+                className="absolute right-[-12px] top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-xl border border-brand-surface bg-white text-brand-primary shadow-md transition-all duration-200 hover:bg-brand-bg hover:text-brand-text hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-brand-primary/35 sm:right-[-20px]"
                 aria-label="Rolar para a direita"
               >
-                <ChevronRight size={24} />
+                <ChevronRight size={22} />
               </button>
             </>
           )}
@@ -475,8 +482,8 @@ export const HomePage = () => {
             className="flex items-stretch snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 pt-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:px-1"
           >
             {isLoading && (
-              <article className="w-[260px] min-w-[260px] flex-none snap-start overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                <p className="text-sm text-slate-500">Carregando produtos em destaque...</p>
+              <article className="w-[260px] min-w-[260px] flex-none snap-start overflow-hidden rounded-2xl border border-brand-surface bg-white p-4 shadow-sm">
+                <p className="text-sm text-brand-primary">Carregando produtos em destaque...</p>
               </article>
             )}
 
@@ -487,8 +494,8 @@ export const HomePage = () => {
             )}
 
             {!isLoading && !productsError && featuredProducts.length === 0 && (
-              <article className="w-[260px] min-w-[260px] flex-none snap-start overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                <p className="text-sm text-slate-600">Nenhum produto marcado como destaque no momento.</p>
+              <article className="w-[260px] min-w-[260px] flex-none snap-start overflow-hidden rounded-2xl border border-brand-surface bg-white p-4 shadow-sm">
+                <p className="text-sm text-brand-primary">Nenhum produto marcado como destaque no momento.</p>
               </article>
             )}
 
@@ -510,10 +517,10 @@ export const HomePage = () => {
 
       {contactLinks.length > 0 && (
         <section className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <div className="rounded-3xl border border-navy/10 bg-white p-6 shadow-sm sm:p-8">
-            <div className="mb-5">
-              <p className="text-sm uppercase tracking-[0.18em] text-slate-500">Canais oficiais</p>
-              <h2 className="font-display text-4xl text-navy">Fale com a Bianto Store</h2>
+          <div className="rounded-2xl border border-brand-text/10 bg-white p-6 shadow-sm sm:p-8">
+            <div className="mb-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-primary">Canais oficiais</p>
+              <h2 className="mt-1 font-display text-3xl text-brand-text sm:text-4xl">Fale com a Bianto Store</h2>
             </div>
 
             <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
@@ -523,13 +530,13 @@ export const HomePage = () => {
                   href={contact.href}
                   target={/^https?:\/\//i.test(contact.href) ? '_blank' : undefined}
                   rel={/^https?:\/\//i.test(contact.href) ? 'noopener noreferrer' : undefined}
-                  className="group rounded-2xl border border-slate-200 bg-offwhite p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-crimson/40"
+                  className="group rounded-2xl border border-brand-surface bg-brand-bg p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-primary/30 hover:shadow-md"
                 >
                   <div className="flex items-start gap-3">
                     <ContactLogo kind={contact.kind} />
                     <div className="min-w-0">
-                      <span className="inline-flex items-center gap-2 text-sm font-semibold text-navy">{contact.title}</span>
-                      <p className="mt-1 line-clamp-2 text-sm text-slate-600">{contact.value}</p>
+                      <span className="inline-flex items-center gap-2 text-sm font-semibold text-brand-text">{contact.title}</span>
+                      <p className="mt-1 line-clamp-2 text-sm text-brand-primary">{contact.value}</p>
                     </div>
                   </div>
                 </a>
@@ -539,60 +546,72 @@ export const HomePage = () => {
         </section>
       )}
 
-      <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="rounded-3xl border border-navy/10 bg-white p-6 shadow-sm sm:p-8">
-          <div className="mb-8">
-            <p className="text-sm uppercase tracking-[0.18em] text-slate-500">Processo simples</p>
-            <h2 className="font-display text-4xl text-navy">Como funciona</h2>
+      {/* How it Works Section */}
+      <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="rounded-2xl border border-brand-text/10 bg-white p-6 shadow-sm sm:p-8">
+          <div className="mb-10 text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-primary">Processo simples</p>
+            <h2 className="mt-1 font-display text-3xl text-brand-text sm:text-4xl">Como funciona</h2>
+            <p className="mx-auto mt-2 max-w-lg text-sm text-brand-primary">
+              Monte seu pedido em poucos passos e receba direto pelo WhatsApp.
+            </p>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-3 md:gap-4">
             {[
               {
-                title: 'Escolha os produtos no catalogo',
+                title: 'Escolha os produtos no catálogo',
+                description: 'Navegue pelas categorias e selecione os itens que combinam com seu projeto.',
                 Icon: ShoppingBag,
               },
               {
-                title: 'Personalize quantidade e observacoes',
+                title: 'Personalize quantidade e observações',
+                description: 'Defina quantidades, cores, frases e acabamentos para cada item.',
                 Icon: Check,
               },
               {
-                title: 'Envie a selecao direto no WhatsApp',
+                title: 'Envie a seleção direto no WhatsApp',
+                description: 'Com um clique, sua lista vai direto para nossa equipe iniciar o orçamento.',
                 Icon: MessageCircle,
               },
-            ].map(({ title, Icon }, index) => (
+            ].map(({ title, description, Icon }, index) => (
               <article
                 key={title}
-                className="flex flex-col items-center rounded-2xl bg-offwhite p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-sm"
+                className="relative flex flex-col items-center rounded-2xl bg-brand-bg/50 p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:bg-brand-bg hover:shadow-sm"
               >
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-crimson/10 text-crimson">
-                  <Icon size={20} aria-hidden="true" />
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-primary/10 text-brand-primary">
+                  <Icon size={22} aria-hidden="true" />
                 </span>
-                <span className="mt-4 inline-flex rounded-full bg-rose-50 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-crimson">
-                  Passo {index + 1}
+                <span className="mt-4 inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-accent/15 font-mono text-xs font-bold text-brand-accent">
+                  {index + 1}
                 </span>
-                <p className="mt-3 text-sm font-medium text-slate-700">{title}</p>
+                <h3 className="mt-3 font-display text-lg font-semibold text-brand-text">{title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-brand-primary">{description}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-7xl px-4 pb-16 pt-8 sm:px-6 lg:px-8">
-        <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6 text-white shadow-xl sm:p-8">
-          <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+      {/* Final CTA Section */}
+      <section className="mx-auto w-full max-w-7xl px-4 pb-16 pt-4 sm:px-6 lg:px-8">
+        <div className="relative overflow-hidden rounded-2xl bg-brand-text p-6 text-white shadow-xl sm:p-10">
+          <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-brand-primary/20 blur-[80px]" />
+          <div className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-brand-accent/15 blur-[60px]" />
+
+          <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="text-sm uppercase tracking-[0.16em] text-white/80">Atendimento rapido</p>
-              <h2 className="font-display text-4xl text-white">Pronto para fazer seu pedido?</h2>
-              <p className="mt-2 max-w-xl text-sm text-white/90">
-                Fale com a equipe da Bianto Store e receba valores, prazo e opcoes de personalizacao.
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-accent">Atendimento rápido</p>
+              <h2 className="mt-1 font-display text-3xl text-white sm:text-4xl">Pronto para fazer seu pedido?</h2>
+              <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/80">
+                Fale com a equipe da Bianto Store e receba valores, prazo e opções de personalização sob medida.
               </p>
             </div>
 
             <Button
               variant="whatsapp"
               size="lg"
-              className="shadow-lg shadow-green-900/25 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-white"
+              className="shrink-0 shadow-lg shadow-emerald-900/25 transition-all duration-300 hover:-translate-y-0.5"
               onClick={() => {
                 if (whatsappLink) {
                   window.open(whatsappLink, '_blank', 'noopener,noreferrer')

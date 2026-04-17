@@ -421,12 +421,12 @@ export const CatalogPage = () => {
   ])
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-3 pb-28 pt-5 sm:px-4 sm:pt-6 md:pb-8 lg:px-6">
-      <div className="mb-4">
-        <p className="text-sm uppercase tracking-[0.18em] text-brand-primary">Catalogo Bianto Store</p>
-        <h1 className="font-display text-3xl leading-tight text-brand-text sm:text-5xl">Monte sua selecao</h1>
-        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-brand-primary">
-          Filtre por categoria, faixa de preco e tags para encontrar os itens ideais para seu pedido.
+    <div className="mx-auto w-full max-w-7xl px-3 pb-28 pt-6 sm:px-4 sm:pt-8 md:pb-8 lg:px-6">
+      <div className="mb-5">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-primary">Catálogo Bianto Store</p>
+        <h1 className="mt-1 font-display text-3xl leading-tight text-brand-text sm:text-4xl lg:text-5xl">Monte sua seleção</h1>
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-brand-primary">
+          Filtre por categoria, faixa de preço e tags para encontrar os itens ideais para seu pedido.
         </p>
         {publicCategoriesError && (
           <p className="mt-1.5 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-900">
@@ -483,18 +483,17 @@ export const CatalogPage = () => {
           )}
 
           {isLoading ? (
-            <div className="rounded-xl bg-brand-bg p-1.5 sm:p-2" aria-label="Carregando produtos">
+            <div className="rounded-2xl bg-brand-bg/40 p-1.5 sm:p-2" aria-label="Carregando produtos">
               <div className="grid grid-cols-2 gap-1.5 sm:gap-2.5 lg:grid-cols-3">
                 {Array.from({ length: 6 }).map((_, index) => (
-                  <div key={index} className="animate-pulse rounded-lg border border-brand-surface bg-brand-surface/30 p-2">
-                    <div className="aspect-square rounded-md bg-brand-surface" />
-                    <div className="mt-1.5 h-3 w-2/5 rounded bg-brand-surface" />
-                    <div className="mt-1.5 h-4 w-full rounded bg-brand-surface" />
-                    <div className="mt-1 h-4 w-5/6 rounded bg-slate-100" />
-                    <div className="mt-2 h-3 w-1/2 rounded bg-slate-100" />
-                    <div className="mt-1.5 h-5 w-4/5 rounded bg-slate-200" />
-                    <div className="mt-1.5 h-3 w-11/12 rounded bg-slate-100" />
-                    <div className="mt-2 h-8 rounded-md bg-slate-200" />
+                  <div key={index} className="animate-pulse rounded-2xl border border-brand-surface/60 bg-white p-2">
+                    <div className="aspect-square rounded-xl bg-brand-surface/50" />
+                    <div className="mt-2 h-3 w-2/5 rounded bg-brand-surface/50" />
+                    <div className="mt-1.5 h-4 w-full rounded bg-brand-surface/40" />
+                    <div className="mt-1 h-4 w-5/6 rounded bg-brand-surface/30" />
+                    <div className="mt-2 h-3 w-1/2 rounded bg-brand-surface/30" />
+                    <div className="mt-1.5 h-5 w-4/5 rounded bg-brand-surface/40" />
+                    <div className="mt-2 h-9 rounded-xl bg-brand-surface/40" />
                   </div>
                 ))}
               </div>

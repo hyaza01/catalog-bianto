@@ -71,21 +71,21 @@ export const SelectionDrawer = ({ isOpen, onClose }: SelectionDrawerProps) => {
 
       <aside
         className={cn(
-          'fixed right-0 top-0 z-50 h-full w-full max-w-md transform border-l border-navy/10 bg-white shadow-2xl transition-transform duration-300',
+          'fixed right-0 top-0 z-50 h-full w-full max-w-md transform border-l border-brand-text/10 bg-white shadow-2xl transition-transform duration-300',
           isOpen ? 'translate-x-0' : 'translate-x-full',
         )}
         aria-label="Painel de selecao de produtos"
       >
         <div className="flex h-full flex-col">
-          <header className="flex items-center justify-between border-b border-slate-200 px-4 py-4 sm:px-5">
+          <header className="flex items-center justify-between border-b border-brand-surface px-4 py-4 sm:px-5">
             <div>
-              <h2 className="font-display text-2xl text-navy">Sua selecao</h2>
-              <p className="text-sm text-slate-500">{totalQuantity} itens no total</p>
+              <h2 className="font-display text-2xl text-brand-text">Sua seleção</h2>
+              <p className="text-sm text-brand-primary">{totalQuantity} itens no total</p>
             </div>
             <button
               type="button"
               onClick={onClose}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition hover:border-navy/40 hover:text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-brand-surface text-brand-primary transition-all duration-200 hover:border-brand-primary/30 hover:text-brand-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
               aria-label="Fechar painel de selecao"
             >
               <X size={18} aria-hidden="true" />
@@ -94,16 +94,16 @@ export const SelectionDrawer = ({ isOpen, onClose }: SelectionDrawerProps) => {
 
           <div className="flex-1 space-y-3 overflow-y-auto p-4 sm:p-5">
             {isLoadingProducts && totalQuantity > 0 && detailedItems.length === 0 && (
-              <div className="rounded-2xl border border-slate-200 bg-white p-6 text-center">
-                <p className="font-medium text-navy">Carregando os itens da sua selecao...</p>
-                <p className="mt-1 text-sm text-slate-500">Estamos buscando os produtos mais recentes no catalogo.</p>
+              <div className="rounded-2xl border border-brand-surface bg-brand-bg p-6 text-center">
+                <p className="font-medium text-brand-text">Carregando os itens da sua seleção...</p>
+                <p className="mt-1 text-sm text-brand-primary">Estamos buscando os produtos mais recentes no catálogo.</p>
               </div>
             )}
 
             {!isLoadingProducts && detailedItems.length === 0 && (
-              <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center">
-                <p className="font-medium text-navy">Nenhum item selecionado ainda.</p>
-                <p className="mt-1 text-sm text-slate-500">Adicione produtos no catalogo para montar seu pedido.</p>
+              <div className="rounded-2xl border border-dashed border-brand-surface bg-brand-bg/50 p-6 text-center">
+                <p className="font-medium text-brand-text">Nenhum item selecionado ainda</p>
+                <p className="mt-1 text-sm text-brand-primary">Adicione produtos no catálogo para montar seu pedido.</p>
               </div>
             )}
 
@@ -113,7 +113,7 @@ export const SelectionDrawer = ({ isOpen, onClose }: SelectionDrawerProps) => {
               return (
                 <article
                   key={item.productId}
-                  className="rounded-2xl border border-slate-200 p-3 shadow-sm transition hover:border-navy/20"
+                  className="rounded-2xl border border-brand-surface p-3 shadow-sm transition hover:border-brand-primary/20"
                 >
                   <div className="flex gap-3">
                     <ProductImage
@@ -122,12 +122,12 @@ export const SelectionDrawer = ({ isOpen, onClose }: SelectionDrawerProps) => {
                       className="h-20 w-20 rounded-xl object-contain"
                     />
                     <div className="min-w-0 flex-1">
-                      <p className="truncate font-semibold text-navy">{item.product.name}</p>
-                      <p className="text-sm text-slate-500">{formatBRL(item.product.price)} por unidade</p>
+                      <p className="truncate font-semibold text-brand-text">{item.product.name}</p>
+                      <p className="text-sm text-brand-primary">{formatBRL(item.product.price)} por unidade</p>
                       <button
                         type="button"
                         onClick={() => removeItem(item.productId)}
-                        className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-crimson transition hover:text-sage focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
+                        className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-red-600 transition hover:text-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
                         aria-label={`Remover ${item.product.name} da selecao`}
                       >
                         <Trash2 size={13} aria-hidden="true" />
@@ -137,10 +137,10 @@ export const SelectionDrawer = ({ isOpen, onClose }: SelectionDrawerProps) => {
                   </div>
 
                   <div className="mt-3 grid gap-3">
-                    <div className="grid gap-1 text-sm font-medium text-slate-700">
+                    <div className="grid gap-1 text-sm font-medium text-brand-text">
                       <span>Quantidade</span>
 
-                      <div className="inline-flex h-10 w-fit items-center rounded-md border border-gray-300 bg-white">
+                      <div className="inline-flex h-10 w-fit items-center rounded-xl border border-brand-surface bg-white">
                         <button
                           type="button"
                           onClick={() =>
@@ -152,12 +152,12 @@ export const SelectionDrawer = ({ isOpen, onClose }: SelectionDrawerProps) => {
                           }
                           disabled={item.quantity <= minimumAllowedQuantity}
                           aria-label={`Diminuir quantidade de ${item.product.name}`}
-                          className="inline-flex h-full items-center justify-center px-3 py-1 text-gray-700 transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
+                          className="inline-flex h-full items-center justify-center px-3 py-1 text-brand-text transition hover:bg-brand-bg disabled:cursor-not-allowed disabled:text-brand-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
                         >
                           <Minus size={14} aria-hidden="true" />
                         </button>
 
-                        <span className="inline-flex w-8 items-center justify-center border-x border-gray-300 text-center text-sm font-semibold text-gray-800">
+                        <span className="inline-flex w-8 items-center justify-center border-x border-brand-surface text-center text-sm font-semibold text-brand-text">
                           {item.quantity}
                         </span>
 
@@ -171,19 +171,19 @@ export const SelectionDrawer = ({ isOpen, onClose }: SelectionDrawerProps) => {
                             )
                           }
                           aria-label={`Aumentar quantidade de ${item.product.name}`}
-                          className="inline-flex h-full items-center justify-center px-3 py-1 text-gray-700 transition hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
+                          className="inline-flex h-full items-center justify-center px-3 py-1 text-brand-text transition hover:bg-brand-bg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
                         >
                           <Plus size={14} aria-hidden="true" />
                         </button>
                       </div>
 
-                      <span className="text-xs font-normal text-slate-500">
-                        Minimo: {minimumAllowedQuantity}
+                      <span className="text-xs font-normal text-brand-primary">
+                        Mínimo: {minimumAllowedQuantity}
                       </span>
                     </div>
 
-                    <label className="grid gap-1 text-sm font-medium text-slate-700" htmlFor={`note-${item.productId}`}>
-                      Observacao
+                    <label className="grid gap-1 text-sm font-medium text-brand-text" htmlFor={`note-${item.productId}`}>
+                      Observação
                       <textarea
                         id={`note-${item.productId}`}
                         aria-label={`Observacao para ${item.product.name}`}
@@ -191,7 +191,7 @@ export const SelectionDrawer = ({ isOpen, onClose }: SelectionDrawerProps) => {
                         onChange={(event) => updateNote(item.productId, event.target.value)}
                         rows={2}
                         placeholder="Cor, frase, logo ou acabamento"
-                        className="resize-none rounded-lg border border-slate-200 px-3 py-2 text-sm text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
+                        className="resize-none rounded-xl border border-brand-surface px-3 py-2 text-sm text-brand-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
                       />
                     </label>
                   </div>
@@ -200,10 +200,10 @@ export const SelectionDrawer = ({ isOpen, onClose }: SelectionDrawerProps) => {
             })}
           </div>
 
-          <footer className="border-t border-slate-200 bg-slate-50 p-4 sm:p-5">
+          <footer className="border-t border-brand-surface bg-brand-bg/50 p-4 sm:p-5">
             <div className="mb-4 flex items-center justify-between text-sm">
-              <span className="font-medium text-slate-600">Estimativa total:</span>
-              <span className="font-mono text-lg font-semibold text-navy">{formatBRL(estimatedTotal)}</span>
+              <span className="font-medium text-brand-primary">Estimativa total:</span>
+              <span className="font-mono text-lg font-semibold text-brand-text">{formatBRL(estimatedTotal)}</span>
             </div>
             <div className="grid gap-2">
               <Button

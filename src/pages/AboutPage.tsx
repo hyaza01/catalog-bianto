@@ -145,11 +145,11 @@ export const AboutPage = () => {
 
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
-      <header className="mb-8">
-        <p className="text-sm uppercase tracking-[0.18em] text-slate-500">Sobre a marca</p>
-        <h1 className="font-display text-5xl text-navy">Bianto Store</h1>
-        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-slate-600">
-          A Bianto Store nasceu para transformar brindes em experiencias premium. Trabalhamos com curadoria
+      <header className="mb-10">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-primary">Sobre a marca</p>
+        <h1 className="mt-1 font-display text-4xl text-brand-text sm:text-5xl">Bianto Store</h1>
+        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-brand-primary">
+          A Bianto Store nasceu para transformar brindes em experiências premium. Trabalhamos com curadoria
           de produtos personalizados para campanhas de marca, presentes corporativos e datas especiais.
         </p>
       </header>
@@ -157,35 +157,37 @@ export const AboutPage = () => {
       <section className="grid gap-4 md:grid-cols-3">
         {[
           {
-            title: 'Acabamento de alto nivel',
-            description: 'Selecionamos materiais com foco em durabilidade e presentacao elegante.',
+            title: 'Acabamento de alto nível',
+            description: 'Selecionamos materiais com foco em durabilidade e apresentação elegante.',
             icon: Star,
           },
           {
-            title: 'Personalizacao completa',
+            title: 'Personalização completa',
             description: 'Aplicamos logo, frase, cor e detalhes sob medida para cada pedido.',
             icon: Sparkles,
           },
           {
             title: 'Atendimento consultivo',
-            description: 'Nossa equipe ajuda a montar kits ideais conforme publico e orcamento.',
+            description: 'Nossa equipe ajuda a montar kits ideais conforme público e orçamento.',
             icon: CheckCircle2,
           },
         ].map((item) => (
-          <article key={item.title} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <item.icon size={20} className="text-crimson" aria-hidden="true" />
-            <h2 className="mt-3 font-display text-2xl text-navy">{item.title}</h2>
-            <p className="mt-2 text-sm text-slate-600">{item.description}</p>
+          <article key={item.title} className="rounded-2xl border border-brand-surface bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-primary/10 text-brand-primary">
+              <item.icon size={20} aria-hidden="true" />
+            </span>
+            <h2 className="mt-4 font-display text-xl text-brand-text">{item.title}</h2>
+            <p className="mt-2 text-sm leading-relaxed text-brand-primary">{item.description}</p>
           </article>
         ))}
       </section>
 
-      <section className="mt-8 rounded-3xl border border-navy/10 bg-white p-6 shadow-sm sm:p-8">
+      <section className="mt-10 rounded-2xl border border-brand-text/10 bg-white p-6 shadow-sm sm:p-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <h2 className="font-display text-3xl text-navy">Contato</h2>
-            <p className="mt-2 text-sm text-slate-600">
-              Os canais abaixo sao atualizados dinamicamente pelas configuracoes do Admin.
+            <h2 className="font-display text-3xl text-brand-text">Contato</h2>
+            <p className="mt-2 text-sm text-brand-primary">
+              Os canais abaixo são atualizados dinamicamente pelas configurações do Admin.
             </p>
           </div>
 
@@ -201,9 +203,9 @@ export const AboutPage = () => {
           )}
         </div>
 
-        <div className="mt-5 grid gap-3 md:grid-cols-2">
+        <div className="mt-6 grid gap-3 md:grid-cols-2">
           {contactLinks.length === 0 && (
-            <p className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+            <p className="rounded-xl border border-brand-surface bg-brand-bg px-4 py-3 text-sm text-brand-primary">
               Nenhum contato configurado no momento.
             </p>
           )}
@@ -214,13 +216,13 @@ export const AboutPage = () => {
               href={contact.href}
               target={/^https?:\/\//i.test(contact.href) ? '_blank' : undefined}
               rel={/^https?:\/\//i.test(contact.href) ? 'noopener noreferrer' : undefined}
-              className="group rounded-2xl border border-slate-200 bg-offwhite p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-crimson/40"
+              className="group rounded-2xl border border-brand-surface bg-brand-bg p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-primary/30 hover:shadow-md"
             >
               <div className="flex items-start gap-3">
                 <ContactLogo kind={contact.kind} size="sm" />
                 <div className="min-w-0">
-                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-navy">{contact.title}</span>
-                  <p className="mt-1 line-clamp-2 text-sm text-slate-600">{contact.value}</p>
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-brand-text">{contact.title}</span>
+                  <p className="mt-1 line-clamp-2 text-sm text-brand-primary">{contact.value}</p>
                 </div>
               </div>
             </a>
