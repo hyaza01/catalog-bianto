@@ -1,5 +1,6 @@
 import { ShoppingBag } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { cn } from '../../utils/cn'
 
 interface FloatingSelectionButtonProps {
@@ -37,32 +38,45 @@ export const FloatingSelectionButton = ({
   }, [count])
 
   return (
-    <button
+    <motion.button
       type="button"
       onClick={onClick}
       aria-label="Abrir painel de seleção"
       className={cn(
-        'fixed bottom-4 right-4 z-40 inline-flex h-12 w-12 items-center justify-center rounded-full bg-brand-primary text-white shadow-xl transition-all duration-300 hover:scale-105 hover:bg-brand-primary2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary md:bottom-6 md:right-6 md:h-14 md:w-14',
+        'fixed bottom-4 right-4 z-40 inline-flex h-12 w-12 items-center justify-center rounded-full bg-brand-primary text-white shadow-xl md:bottom-6 md:right-6 md:h-14 md:w-14',
         mobileVisible ? 'inline-flex' : 'hidden',
         desktopVisible ? 'md:inline-flex' : 'md:hidden',
-        isBumping && 'animate-[bounce_650ms_ease-out]',
       )}
+      initial={{ scale: 0, opacity: 0, rotate: -180 }}
+      animate={{ scale: 1, opacity: 1, rotate: 0 }}
+      whileHover={{ scale: 1.1, boxShadow: '0 0 30px rgba(95, 111, 90, 0.4)' }}
+      whileTap={{ scale: 0.9 }}
+      transition={{
+        type: 'spring',
+        damping: 15,
+        stiffness: 300,
+        delay: 0.5,
+      }}
     >
       <ShoppingBag size={20} aria-hidden="true" />
-      <span
-        className={cn(
-          'absolute -right-1 -top-1 inline-flex min-h-5 min-w-5 items-center justify-center rounded-full bg-brand-accent px-1 font-mono text-[11px] font-bold text-brand-text transition-transform duration-300',
-          isBumping ? 'scale-110' : 'scale-100',
-        )}
-      >
-        {count}
-      </span>
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={count}
+          className="absolute -right-1 -top-1 inline-flex min-h-5 min-w-5 items-center justify-center rounded-full bg-brand-accent px-1 font-mono text-[11px] font-bold text-brand-text"
+          initial={{ scale: 0.5, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 1.5, opacity: 0 }}
+          transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+        >
+          {count}
+        </motion.span>
+      </AnimatePresence>
       {isBumping && (
         <span
           className="pointer-events-none absolute inset-0 rounded-full border-2 border-brand-accent/80 animate-[ping_650ms_ease-out]"
           aria-hidden="true"
         />
       )}
-    </button>
+    </motion.button>
   )
 }

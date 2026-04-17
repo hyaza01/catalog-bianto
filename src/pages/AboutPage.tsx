@@ -6,6 +6,7 @@ import { formatBrazilPhoneDisplay, normalizePhoneDigits, resolveBrazilWhatsAppNu
 import { buildDirectWhatsAppMessage, createDirectWhatsAppLink } from '../utils/whatsapp'
 import { Button } from '../components/ui/Button'
 import { ContactLogo, type ContactKind } from '../components/common/ContactLogo'
+import { Reveal, AnimatedText, StaggerChildren, StaggerItem } from '../components/common/AnimatedElements'
 
 type ContactLink = {
   id: string
@@ -146,78 +147,58 @@ export const AboutPage = () => {
 
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
-      <motion.header
-        className="mb-10"
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-primary">Sobre a marca</p>
-        <h1 className="mt-1 font-display text-4xl text-brand-text sm:text-5xl">Bianto Store</h1>
-        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-brand-primary">
-          A Bianto Store nasceu para transformar brindes em experiências premium. Trabalhamos com curadoria
-          de produtos personalizados para campanhas de marca, presentes corporativos e datas especiais.
-        </p>
-      </motion.header>
+      <Reveal direction="up">
+        <header className="mb-8">
+          <p className="text-sm uppercase tracking-[0.18em] text-slate-500">Sobre a marca</p>
+          <AnimatedText text="Bianto Store" as="h1" className="font-display text-5xl text-navy" />
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-slate-600">
+            A Bianto Store nasceu para transformar brindes em experiencias premium. Trabalhamos com curadoria
+            de produtos personalizados para campanhas de marca, presentes corporativos e datas especiais.
+          </p>
+        </header>
+      </Reveal>
 
-      <motion.section
-        className="grid gap-4 md:grid-cols-3"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
-      >
+      <StaggerChildren className="grid gap-4 md:grid-cols-3">
         {[
           {
-            title: 'Acabamento de alto nível',
-            description: 'Selecionamos materiais com foco em durabilidade e apresentação elegante.',
+            title: 'Acabamento de alto nivel',
+            description: 'Selecionamos materiais com foco em durabilidade e presentacao elegante.',
             icon: Star,
           },
           {
-            title: 'Personalização completa',
+            title: 'Personalizacao completa',
             description: 'Aplicamos logo, frase, cor e detalhes sob medida para cada pedido.',
             icon: Sparkles,
           },
           {
             title: 'Atendimento consultivo',
-            description: 'Nossa equipe ajuda a montar kits ideais conforme público e orçamento.',
+            description: 'Nossa equipe ajuda a montar kits ideais conforme publico e orcamento.',
             icon: CheckCircle2,
           },
         ].map((item) => (
-          <motion.article
-            key={item.title}
-            variants={{
-              hidden: { opacity: 0, y: 22, scale: 0.97 },
-              visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const } },
-            }}
-            whileHover={{ y: -4, boxShadow: '0 10px 30px -8px rgba(43,43,43,0.15)' }}
-            className="rounded-2xl border border-brand-surface bg-white p-6 shadow-sm"
-          >
-            <motion.span
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-primary/10 text-brand-primary"
-              whileHover={{ scale: 1.12, rotate: 6 }}
-              transition={{ type: 'spring', stiffness: 300 }}
+          <StaggerItem key={item.title}>
+            <motion.article
+              className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm glow-hover"
+              whileHover={{ y: -6, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <item.icon size={20} aria-hidden="true" />
-            </motion.span>
-            <h2 className="mt-4 font-display text-xl text-brand-text">{item.title}</h2>
-            <p className="mt-2 text-sm leading-relaxed text-brand-primary">{item.description}</p>
-          </motion.article>
+              <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }}>
+                <item.icon size={20} className="text-crimson" aria-hidden="true" />
+              </motion.div>
+              <h2 className="mt-3 font-display text-2xl text-navy">{item.title}</h2>
+              <p className="mt-2 text-sm text-slate-600">{item.description}</p>
+            </motion.article>
+          </StaggerItem>
         ))}
-      </motion.section>
+      </StaggerChildren>
 
-      <motion.section
-        className="mt-10 rounded-2xl border border-brand-text/10 bg-white p-6 shadow-sm sm:p-8"
-        initial={{ opacity: 0, y: 28 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      >
+      <Reveal direction="up" delay={0.2}>
+        <section className="mt-8 rounded-3xl border border-navy/10 bg-white p-6 shadow-sm sm:p-8 glow-hover">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <h2 className="font-display text-3xl text-brand-text">Contato</h2>
-            <p className="mt-2 text-sm text-brand-primary">
-              Os canais abaixo são atualizados dinamicamente pelas configurações do Admin.
+            <h2 className="font-display text-3xl text-navy">Contato</h2>
+            <p className="mt-2 text-sm text-slate-600">
+              Os canais abaixo sao atualizados dinamicamente pelas configuracoes do Admin.
             </p>
           </div>
 
@@ -233,15 +214,9 @@ export const AboutPage = () => {
           )}
         </div>
 
-        <motion.div
-          className="mt-6 grid gap-3 md:grid-cols-2"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
-        >
+        <div className="mt-5 grid gap-3 md:grid-cols-2">
           {contactLinks.length === 0 && (
-            <p className="rounded-xl border border-brand-surface bg-brand-bg px-4 py-3 text-sm text-brand-primary">
+            <p className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
               Nenhum contato configurado no momento.
             </p>
           )}
@@ -252,24 +227,22 @@ export const AboutPage = () => {
               href={contact.href}
               target={/^https?:\/\//i.test(contact.href) ? '_blank' : undefined}
               rel={/^https?:\/\//i.test(contact.href) ? 'noopener noreferrer' : undefined}
-              variants={{
-                hidden: { opacity: 0, y: 16 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const } },
-              }}
-              whileHover={{ y: -3, boxShadow: '0 6px 20px -4px rgba(43,43,43,0.12)' }}
-              className="group rounded-2xl border border-brand-surface bg-brand-bg p-4 transition-colors duration-200 hover:border-brand-primary/30"
+              className="group rounded-2xl border border-slate-200 bg-offwhite p-4 transition-all duration-200 hover:border-crimson/40"
+              whileHover={{ y: -4, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               <div className="flex items-start gap-3">
                 <ContactLogo kind={contact.kind} size="sm" />
                 <div className="min-w-0">
-                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-brand-text">{contact.title}</span>
-                  <p className="mt-1 line-clamp-2 text-sm text-brand-primary">{contact.value}</p>
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-navy">{contact.title}</span>
+                  <p className="mt-1 line-clamp-2 text-sm text-slate-600">{contact.value}</p>
                 </div>
               </div>
             </motion.a>
           ))}
-        </motion.div>
-      </motion.section>
+        </div>
+      </section>
+      </Reveal>
     </div>
   )
 }
