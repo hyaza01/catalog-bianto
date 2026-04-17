@@ -1169,6 +1169,16 @@ export const AdminPage = () => {
     }))
   }
 
+  const setContentChange = (key: string, value: string) => {
+    setSiteSettingsForm((current) => ({
+      ...current,
+      content: {
+        ...(current.content || {}),
+        [key]: value,
+      },
+    }))
+  }
+
   const handleSaveSiteSettings = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
@@ -1186,6 +1196,7 @@ export const AdminPage = () => {
         youtubeUrl: siteSettingsForm.youtubeUrl.trim(),
         websiteUrl: siteSettingsForm.websiteUrl.trim(),
         supportLink: siteSettingsForm.supportLink.trim(),
+        content: siteSettingsForm.content || {},
       }
 
       await saveSettings(normalized)
@@ -2263,6 +2274,150 @@ export const AdminPage = () => {
                     className={fieldClassName}
                   />
                 </label>
+
+                <div className="mt-8 border-t border-slate-200 pt-8">
+                  <h3 className="font-display text-2xl text-[#2B2B2B]">Textos do Site</h3>
+                  <p className="mt-1 text-sm text-slate-600 mb-5">Personalize os conteúdos da página principal.</p>
+
+                  <div className="space-y-4">
+                    {/* Hero Section */}
+                    <fieldset className="rounded-xl border border-slate-200 p-4">
+                      <legend className="text-sm font-bold text-slate-700 px-2">Seção Hero</legend>
+                      <div className="grid gap-4 mt-2">
+                        <label className="grid gap-1 text-sm font-medium text-slate-700">
+                          Tagline (Hero Badge)
+                          <input
+                            value={siteSettingsForm.content?.heroBadge || ''}
+                            onChange={(e) => setContentChange('heroBadge', e.target.value)}
+                            placeholder="Ex.: Catálogo Premium"
+                            className={fieldClassName}
+                          />
+                        </label>
+                        <label className="grid gap-1 text-sm font-medium text-slate-700">
+                          Título Principal (Hero Title)
+                          <input
+                            value={siteSettingsForm.content?.heroTitle || ''}
+                            onChange={(e) => setContentChange('heroTitle', e.target.value)}
+                            placeholder="Ex.: Bianto Store"
+                            className={fieldClassName}
+                          />
+                        </label>
+                        <label className="grid gap-1 text-sm font-medium text-slate-700">
+                          Subtítulo (Hero Subtitle)
+                          <input
+                            value={siteSettingsForm.content?.heroSubtitle || ''}
+                            onChange={(e) => setContentChange('heroSubtitle', e.target.value)}
+                            placeholder="Ex.: Personalizados que marcam momentos"
+                            className={fieldClassName}
+                          />
+                        </label>
+                        <label className="grid gap-1 text-sm font-medium text-slate-700">
+                          Descrição (Hero Description)
+                          <textarea
+                            value={siteSettingsForm.content?.heroDescription || ''}
+                            onChange={(e) => setContentChange('heroDescription', e.target.value)}
+                            placeholder="Breve descrição da sua loja..."
+                            className={textAreaClassName}
+                            rows={3}
+                          />
+                        </label>
+                      </div>
+                    </fieldset>
+
+                    {/* Benefits Section */}
+                    <fieldset className="rounded-xl border border-slate-200 p-4">
+                      <legend className="text-sm font-bold text-slate-700 px-2">Seção de Benefícios</legend>
+                      <div className="grid gap-4 md:grid-cols-2 mt-2">
+                        <label className="grid gap-1 text-sm font-medium text-slate-700">
+                          Título Benefício 1
+                          <input
+                            value={siteSettingsForm.content?.benefitsTitle1 || ''}
+                            onChange={(e) => setContentChange('benefitsTitle1', e.target.value)}
+                            placeholder="Ex.: Kits assinatura"
+                            className={fieldClassName}
+                          />
+                        </label>
+                        <label className="grid gap-1 text-sm font-medium text-slate-700">
+                          Descrição Benefício 1
+                          <textarea
+                            value={siteSettingsForm.content?.benefitsDesc1 || ''}
+                            onChange={(e) => setContentChange('benefitsDesc1', e.target.value)}
+                            placeholder="Detalhes..."
+                            className={textAreaClassName}
+                            rows={2}
+                          />
+                        </label>
+                        <label className="grid gap-1 text-sm font-medium text-slate-700">
+                          Título Benefício 2
+                          <input
+                            value={siteSettingsForm.content?.benefitsTitle2 || ''}
+                            onChange={(e) => setContentChange('benefitsTitle2', e.target.value)}
+                            className={fieldClassName}
+                          />
+                        </label>
+                        <label className="grid gap-1 text-sm font-medium text-slate-700">
+                          Descrição Benefício 2
+                          <textarea
+                            value={siteSettingsForm.content?.benefitsDesc2 || ''}
+                            onChange={(e) => setContentChange('benefitsDesc2', e.target.value)}
+                            className={textAreaClassName}
+                            rows={2}
+                          />
+                        </label>
+                        <label className="grid gap-1 text-sm font-medium text-slate-700">
+                          Título Benefício 3
+                          <input
+                            value={siteSettingsForm.content?.benefitsTitle3 || ''}
+                            onChange={(e) => setContentChange('benefitsTitle3', e.target.value)}
+                            className={fieldClassName}
+                          />
+                        </label>
+                        <label className="grid gap-1 text-sm font-medium text-slate-700">
+                          Descrição Benefício 3
+                          <textarea
+                            value={siteSettingsForm.content?.benefitsDesc3 || ''}
+                            onChange={(e) => setContentChange('benefitsDesc3', e.target.value)}
+                            className={textAreaClassName}
+                            rows={2}
+                          />
+                        </label>
+                      </div>
+                    </fieldset>
+
+                    {/* Headings */}
+                    <fieldset className="rounded-xl border border-slate-200 p-4">
+                      <legend className="text-sm font-bold text-slate-700 px-2">Títulos das Listagens</legend>
+                      <div className="grid gap-4 mt-2">
+                        <label className="grid gap-1 text-sm font-medium text-slate-700">
+                          Título de Navegação (Categorias)
+                          <input
+                            value={siteSettingsForm.content?.navTitle || ''}
+                            onChange={(e) => setContentChange('navTitle', e.target.value)}
+                            placeholder="Ex.: Categorias em destaque"
+                            className={fieldClassName}
+                          />
+                        </label>
+                        <label className="grid gap-1 text-sm font-medium text-slate-700">
+                          Título Coleção Secundária
+                          <input
+                            value={siteSettingsForm.content?.categoriesTitle || ''}
+                            onChange={(e) => setContentChange('categoriesTitle', e.target.value)}
+                            className={fieldClassName}
+                          />
+                        </label>
+                        <label className="grid gap-1 text-sm font-medium text-slate-700">
+                          Título de Produtos (Produtos em destaque)
+                          <input
+                            value={siteSettingsForm.content?.productsTitle || ''}
+                            onChange={(e) => setContentChange('productsTitle', e.target.value)}
+                            placeholder="Ex.: Produtos em destaque"
+                            className={fieldClassName}
+                          />
+                        </label>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
 
                 <div className="flex flex-wrap gap-2">
                   <Button

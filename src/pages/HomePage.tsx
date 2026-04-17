@@ -297,15 +297,14 @@ export const HomePage = () => {
         <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-8 lg:py-24">
           <div className="space-y-6">
             <p className="inline-flex rounded-full border border-paper/25 bg-paper/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-paper">
-              Catalogo Premium
+              {siteSettings.content.heroBadge}
             </p>
             <h1 className="font-display text-5xl leading-tight text-paper sm:text-6xl">
-              Bianto Store
-              <span className="block italic text-paper">Personalizados que marcam momentos</span>
+              {siteSettings.content.heroTitle}
+              <span className="block italic text-paper">{siteSettings.content.heroSubtitle}</span>
             </h1>
             <p className="max-w-xl text-base text-paper/85 sm:text-lg">
-              Canecas, garrafas termicas, copos e kits especiais com design sofisticado para presentes
-              corporativos e datas memoraveis.
+              {siteSettings.content.heroDescription}
             </p>
             <div className="flex flex-wrap items-center gap-3">
               <Button
@@ -334,12 +333,12 @@ export const HomePage = () => {
 
           <div className="rounded-3xl border border-paper/20 bg-paper/10 p-6 backdrop-blur-sm">
             <p className="text-sm uppercase tracking-[0.18em] text-paper/75">Linha em destaque</p>
-            <h2 className="mt-2 font-display text-4xl text-paper">Kits assinatura</h2>
+            <h2 className="mt-2 font-display text-4xl text-paper">{siteSettings.content.benefitsTitle1}</h2>
             <p className="mt-3 text-sm leading-relaxed text-paper/85">
-              Monte kits elegantes combinando garrafas, canecas e brindes extras com personalizacao completa.
+              {siteSettings.content.benefitsDesc1}
             </p>
             <div className="mt-5 grid gap-3 text-sm text-paper/90">
-              {['Personalizacao total', 'Pedido rapido via WhatsApp', 'Acabamento premium'].map((feature) => (
+              {[siteSettings.content.benefitsTitle2, 'Pedido rapido via WhatsApp', siteSettings.content.benefitsTitle3].filter(Boolean).map((feature) => (
                 <div key={feature} className="flex items-center gap-2">
                   <Check size={16} className="text-amber" aria-hidden="true" />
                   {feature}
@@ -353,8 +352,8 @@ export const HomePage = () => {
       <section className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="mb-6 flex items-end justify-between gap-4">
           <div>
-            <p className="text-sm uppercase tracking-[0.18em] text-slate-500">Navegacao rapida</p>
-            <h2 className="font-display text-4xl text-navy">Categorias em destaque</h2>
+            <p className="text-sm uppercase tracking-[0.18em] text-slate-500">{siteSettings.content.navTitle}</p>
+            <h2 className="font-display text-4xl text-navy">{siteSettings.content.categoriesTitle}</h2>
           </div>
         </div>
 
@@ -436,7 +435,7 @@ export const HomePage = () => {
         <div className="mb-6 flex items-end justify-between gap-4">
           <div>
             <p className="text-sm uppercase tracking-[0.18em] text-slate-500">Curadoria</p>
-            <h2 className="font-display text-4xl text-navy">Produtos em destaque</h2>
+            <h2 className="font-display text-4xl text-navy">{siteSettings.content.productsTitle}</h2>
           </div>
           <Button 
             variant="primary" 

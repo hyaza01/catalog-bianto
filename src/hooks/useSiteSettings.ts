@@ -13,6 +13,7 @@ interface SiteSettingsRow {
   youtube_url: unknown
   website_url: unknown
   support_link: unknown
+  content: unknown
 }
 
 export interface SiteSettings {
@@ -25,6 +26,7 @@ export interface SiteSettings {
   youtubeUrl: string
   websiteUrl: string
   supportLink: string
+  content: Record<string, string>
 }
 
 interface UseSiteSettingsResult {
@@ -45,6 +47,22 @@ const defaultSettings: SiteSettings = {
   youtubeUrl: '',
   websiteUrl: '',
   supportLink: '',
+  content: {
+    heroBadge: 'Catalogo Premium',
+    heroTitle: 'Bianto Store',
+    heroSubtitle: 'Personalizados que marcam momentos',
+    heroDescription: 'Canecas personalizadas e kits especiais com design sofisticado para presentes corporativos e datas memoraveis.',
+    benefitsTitle1: 'Kits assinatura',
+    benefitsDesc1: 'Monte kits elegantes combinando garrafas, canecas e brindes extras com personalizacao completa.',
+    benefitsTitle2: 'Personalizacao total',
+    benefitsDesc2: 'Selecione cores, rotulos e caixas sob medida para comunicar perfeitamente a sua marca.',
+    benefitsTitle3: 'Acabamento premium',
+    benefitsDesc3: 'Produtos testados e finalizados com rigor para entregar um material que dure anos.',
+    navTitle: 'Navegacao rapida',
+    categoriesTitle: 'Categorias em destaque',
+    productsTitle: 'Produtos em destaque',
+    buttonCatalog: 'Ver catalogo completo',
+  },
 }
 
 const siteSettingsLocalStorageKey = 'bianto-site-settings-local'
@@ -58,6 +76,20 @@ const normalizeSiteSettings = (row: SiteSettingsRow | null): SiteSettings => {
     return defaultSettings
   }
 
+  let parsedContent = defaultSettings.content
+  if (row.content && typeof row.content === 'object') {
+    parsedContent = { ...defaultSettings.content, ...(row.content as Record<string, string>) }
+  } else if (typeof row.content === 'string') {
+    try {
+      const parsed = JSON.parse(row.content)
+      if (parsed && typeof parsed === 'object') {
+        parsedContent = { ...defaultSettings.content, ...parsed }
+      }
+    } catch {
+      // ignore
+    }
+  }
+
   return {
     whatsappNumber: readString(row.whatsapp_number),
     contactPhone: readString(row.contact_phone),
@@ -68,6 +100,7 @@ const normalizeSiteSettings = (row: SiteSettingsRow | null): SiteSettings => {
     youtubeUrl: readString(row.youtube_url),
     websiteUrl: readString(row.website_url),
     supportLink: readString(row.support_link),
+    content: parsedContent,
   }
 }
 
@@ -123,6 +156,12 @@ const readLocalSettings = (): SiteSettings => {
       return defaultSettings
     }
 
+    let parsedContent = defaultSettings.content
+    const rawContent = (parsed as Record<string, unknown>).content
+    if (rawContent && typeof rawContent === 'object') {
+      parsedContent = { ...defaultSettings.content, ...(rawContent as Record<string, string>) }
+    }
+
     return {
       whatsappNumber: readString((parsed as Record<string, unknown>).whatsappNumber),
       contactPhone: readString((parsed as Record<string, unknown>).contactPhone),
@@ -133,6 +172,7 @@ const readLocalSettings = (): SiteSettings => {
       youtubeUrl: readString((parsed as Record<string, unknown>).youtubeUrl),
       websiteUrl: readString((parsed as Record<string, unknown>).websiteUrl),
       supportLink: readString((parsed as Record<string, unknown>).supportLink),
+      content: parsedContent,
     }
   } catch {
     return defaultSettings
@@ -201,6 +241,15 @@ const triggerSettingsCacheInvalidationWebhook = async (): Promise<void> => {
 }
 
 const fetchSiteSettingsRow = async (): Promise<{ row: SiteSettingsRow | null; error: SiteSettingsDbError | null }> => {
+  const directResult = await supabase.from('site_settings').select('*').eq('id', 1).maybeSingle()
+
+  if (!directResult.error) {
+    return {
+      row: (directResult.data as SiteSettingsRow | null) ?? null,
+      error: null,
+    }
+  }
+
   const rpcResult = await supabase.rpc('get_site_settings')
 
   if (!rpcResult.error) {
@@ -214,18 +263,9 @@ const fetchSiteSettingsRow = async (): Promise<{ row: SiteSettingsRow | null; er
     }
   }
 
-  const fallbackResult = await supabase.from('site_settings').select('*').eq('id', 1).maybeSingle()
-
-  if (fallbackResult.error) {
-    return {
-      row: null,
-      error: fallbackResult.error,
-    }
-  }
-
   return {
-    row: (fallbackResult.data as SiteSettingsRow | null) ?? null,
-    error: null,
+    row: null,
+    error: directResult.error || rpcResult.error,
   }
 }
 
@@ -261,6 +301,7 @@ const upsertSiteSettings = async (nextSettings: SiteSettings): Promise<SiteSetti
     youtube_url: nextSettings.youtubeUrl,
     website_url: nextSettings.websiteUrl,
     support_link: nextSettings.supportLink,
+    content: nextSettings.content,
     updated_at: new Date().toISOString(),
   }
 
