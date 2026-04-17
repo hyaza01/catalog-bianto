@@ -7,6 +7,10 @@
     color-scheme: light;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   html,
   body,
   #root {
@@ -45,5 +49,29 @@
 
   ::selection {
     @apply bg-crimson text-white;
+  }
+
+  /* Custom scrollbar for webkit browsers */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-brand-surface;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-brand-muted;
+  }
+}
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 }

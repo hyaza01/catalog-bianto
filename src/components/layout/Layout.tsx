@@ -28,9 +28,9 @@ export const Layout = () => {
   return (
     <div className="min-h-screen bg-paper text-navy">
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
-        <div className="absolute -left-20 top-20 h-72 w-72 rounded-full bg-crimson/10 blur-3xl" />
-        <div className="absolute -right-24 top-1/3 h-80 w-80 rounded-full bg-amber/20 blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-navy/10 blur-3xl" />
+        <div className="absolute -left-28 top-16 h-80 w-80 rounded-full bg-brand-primary/8 blur-[100px]" />
+        <div className="absolute -right-32 top-1/4 h-96 w-96 rounded-full bg-brand-accent/12 blur-[100px]" />
+        <div className="absolute -bottom-16 left-1/4 h-72 w-72 rounded-full bg-brand-primary/6 blur-[80px]" />
       </div>
 
       <Header onOpenSelection={openSelectionDrawer} selectionCount={totalQuantity} />

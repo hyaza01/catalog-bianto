@@ -18,13 +18,13 @@ export const ProductGrid = ({ products, onOpenDetails, onSelect }: ProductGridPr
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           exit={{ opacity: 0, y: -14, filter: 'blur(4px)' }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-slate-600"
+          className="rounded-2xl border border-dashed border-brand-surface bg-brand-bg/50 p-10 text-center"
         >
-          <p className="font-semibold text-navy">Nenhum produto encontrado.</p>
-          <p className="mt-1 text-sm">Ajuste os filtros para encontrar outras opcoes.</p>
+          <p className="font-display text-xl text-brand-text">Nenhum produto encontrado</p>
+          <p className="mt-2 text-sm text-brand-primary">Ajuste os filtros para encontrar outras opções no catálogo.</p>
         </motion.div>
       ) : (
-        <motion.div key="products-grid-wrapper" layout className="overflow-x-hidden rounded-xl bg-[#FAFAFA] p-1.5 sm:p-2">
+        <motion.div key="products-grid-wrapper" layout className="overflow-x-hidden rounded-2xl bg-brand-bg/30 p-1.5 sm:p-2">
           <motion.div
             key="products-grid"
             layout
