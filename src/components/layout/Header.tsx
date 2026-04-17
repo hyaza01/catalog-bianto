@@ -17,6 +17,7 @@ const navigationLinks = [
 
 export const Header = ({ onOpenSelection, selectionCount }: HeaderProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const mobileMenuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -32,8 +33,23 @@ export const Header = ({ onOpenSelection, selectionCount }: HeaderProps) => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [isMobileMenuOpen])
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 12)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
-    <header className="sticky top-0 z-40 border-b border-brand-surface bg-brand-bg/95 backdrop-blur-md" ref={mobileMenuRef}>
+    <header
+      className={cn(
+        'sticky top-0 z-40 border-b border-brand-surface bg-brand-bg/95 backdrop-blur-md transition-shadow duration-300',
+        isScrolled && 'shadow-[0_4px_24px_-4px_rgba(43,43,43,0.12)]',
+      )}
+      ref={mobileMenuRef}
+    >
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-8">
         <NavLink
           to="/"

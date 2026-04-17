@@ -6,6 +6,7 @@ import {
   MessageCircle,
   ShoppingBag,
 } from 'lucide-react'
+import { motion } from 'framer-motion'
 import { useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useProducts } from '../hooks/useProducts'
@@ -19,7 +20,48 @@ import { Button } from '../components/ui/Button'
 import { ProductCard } from '../components/catalog/ProductCard'
 import { ProductDetailModal } from '../components/catalog/ProductDetailModal'
 import { ContactLogo, type ContactKind } from '../components/common/ContactLogo'
+import { FloatingOrbs } from '../components/common/FloatingOrbs'
 import { DEFAULT_PRODUCT_IMAGE } from '../utils/constants'
+
+const fadeUpVariants = {
+  hidden: { opacity: 0, y: 28, filter: 'blur(8px)' },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+  },
+}
+
+const staggerContainerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
+}
+
+const staggerItemVariants = {
+  hidden: { opacity: 0, y: 22, scale: 0.97 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
+  },
+}
+
+const heroTextVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
+}
+
+const heroItemVariants = {
+  hidden: { opacity: 0, y: 30, filter: 'blur(10px)' },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
+  },
+}
 
 const categoryDescriptions: Record<string, string> = {
   canecas: 'Modelos classicos e premium para presentear.',
@@ -295,20 +337,26 @@ export const HomePage = () => {
           backgroundPosition: 'center',
         }}
       >
+        <FloatingOrbs />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20" />
         <div className="relative mx-auto grid w-full max-w-7xl gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:px-8 lg:py-28">
-          <div className="space-y-6">
-            <p className="inline-flex rounded-full border border-paper/20 bg-paper/8 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-paper/90 backdrop-blur-sm">
+          <motion.div
+            className="space-y-6"
+            variants={heroTextVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.p variants={heroItemVariants} className="inline-flex rounded-full border border-paper/20 bg-paper/8 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-paper/90 backdrop-blur-sm">
               {siteSettings.content.heroBadge}
-            </p>
-            <h1 className="font-display text-4xl leading-[1.1] text-paper sm:text-5xl lg:text-6xl">
+            </motion.p>
+            <motion.h1 variants={heroItemVariants} className="font-display text-4xl leading-[1.1] text-paper sm:text-5xl lg:text-6xl">
               {siteSettings.content.heroTitle}
               <span className="mt-1 block text-brand-accent italic">{siteSettings.content.heroSubtitle}</span>
-            </h1>
-            <p className="max-w-xl text-base leading-relaxed text-paper/80 sm:text-lg">
+            </motion.h1>
+            <motion.p variants={heroItemVariants} className="max-w-xl text-base leading-relaxed text-paper/80 sm:text-lg">
               {siteSettings.content.heroDescription}
-            </p>
-            <div className="flex flex-wrap items-center gap-3 pt-1">
+            </motion.p>
+            <motion.div variants={heroItemVariants} className="flex flex-wrap items-center gap-3 pt-1">
               <Button
                 size="lg"
                 variant="primary"
@@ -331,10 +379,16 @@ export const HomePage = () => {
                   Falar no WhatsApp
                 </Button>
               )}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          <div className="rounded-2xl border border-paper/15 bg-paper/8 p-6 backdrop-blur-md sm:p-7">
+          <motion.div
+            variants={heroItemVariants}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 0.55, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="rounded-2xl border border-paper/15 bg-paper/8 p-6 backdrop-blur-md sm:p-7"
+          >
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-accent">Linha em destaque</p>
             <h2 className="mt-2 font-display text-3xl text-paper sm:text-4xl">{siteSettings.content.benefitsTitle1}</h2>
             <p className="mt-3 text-sm leading-relaxed text-paper/80">
@@ -350,12 +404,18 @@ export const HomePage = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Categories Section */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <motion.section
+        className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8"
+        variants={fadeUpVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+      >
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-primary">{siteSettings.content.navTitle}</p>
@@ -405,13 +465,17 @@ export const HomePage = () => {
               className="flex items-stretch snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 pt-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:px-1"
             >
               {primaryCategories.map((category, index) => (
-                <button
+                <motion.button
                   key={category.id}
                   type="button"
                   onClick={() => navigate(buildCatalogLink({ categoryId: category.id }))}
                   aria-label={`Abrir categoria ${category.name}`}
-                  className="group relative h-64 w-[260px] min-w-[260px] flex-none snap-start overflow-hidden rounded-2xl border border-brand-surface/50 bg-brand-text text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
-                  style={{ transitionDelay: `${index * 35}ms` }}
+                  className="group relative h-64 w-[260px] min-w-[260px] flex-none snap-start overflow-hidden rounded-2xl border border-brand-surface/50 bg-brand-text text-left shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
+                  initial={{ opacity: 0, y: 24, scale: 0.97 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.45, delay: Math.min(index * 0.07, 0.35), ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ y: -4, boxShadow: '0 20px 40px -12px rgba(43,43,43,0.35)' }}
                 >
                   <img
                     src={categoryPreviewImageById[category.id] || DEFAULT_PRODUCT_IMAGE}
@@ -430,15 +494,21 @@ export const HomePage = () => {
                       <ArrowRight size={14} aria-hidden="true" />
                     </span>
                   </div>
-                </button>
+                </motion.button>
               ))}
             </div>
           </div>
         )}
-      </section>
+      </motion.section>
 
       {/* Featured Products Section */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <motion.section
+        className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8"
+        variants={fadeUpVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+      >
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-primary">Curadoria</p>
@@ -513,24 +583,38 @@ export const HomePage = () => {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {contactLinks.length > 0 && (
-        <section className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <motion.section
+          className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8"
+          variants={fadeUpVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
           <div className="rounded-2xl border border-brand-text/10 bg-white p-6 shadow-sm sm:p-8">
             <div className="mb-6">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-primary">Canais oficiais</p>
               <h2 className="mt-1 font-display text-3xl text-brand-text sm:text-4xl">Fale com a Bianto Store</h2>
             </div>
 
-            <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+            <motion.div
+              className="grid gap-3 md:grid-cols-2 lg:grid-cols-3"
+              variants={staggerContainerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.1 }}
+            >
               {contactLinks.map((contact) => (
-                <a
+                <motion.a
                   key={contact.id}
                   href={contact.href}
                   target={/^https?:\/\//i.test(contact.href) ? '_blank' : undefined}
                   rel={/^https?:\/\//i.test(contact.href) ? 'noopener noreferrer' : undefined}
-                  className="group rounded-2xl border border-brand-surface bg-brand-bg p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-primary/30 hover:shadow-md"
+                  variants={staggerItemVariants}
+                  whileHover={{ y: -3, boxShadow: '0 8px 24px -6px rgba(43,43,43,0.15)' }}
+                  className="group rounded-2xl border border-brand-surface bg-brand-bg p-4 transition-colors duration-200 hover:border-brand-primary/30"
                 >
                   <div className="flex items-start gap-3">
                     <ContactLogo kind={contact.kind} />
@@ -539,15 +623,21 @@ export const HomePage = () => {
                       <p className="mt-1 line-clamp-2 text-sm text-brand-primary">{contact.value}</p>
                     </div>
                   </div>
-                </a>
+                </motion.a>
               ))}
-            </div>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* How it Works Section */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <motion.section
+        className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8"
+        variants={fadeUpVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+      >
         <div className="rounded-2xl border border-brand-text/10 bg-white p-6 shadow-sm sm:p-8">
           <div className="mb-10 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-primary">Processo simples</p>
@@ -557,7 +647,13 @@ export const HomePage = () => {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3 md:gap-4">
+          <motion.div
+            className="grid gap-6 md:grid-cols-3 md:gap-4"
+            variants={staggerContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
             {[
               {
                 title: 'Escolha os produtos no catálogo',
@@ -575,29 +671,49 @@ export const HomePage = () => {
                 Icon: MessageCircle,
               },
             ].map(({ title, description, Icon }, index) => (
-              <article
+              <motion.article
                 key={title}
-                className="relative flex flex-col items-center rounded-2xl bg-brand-bg/50 p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:bg-brand-bg hover:shadow-sm"
+                variants={staggerItemVariants}
+                whileHover={{ y: -4, backgroundColor: 'rgba(237,230,222,1)' }}
+                className="relative flex flex-col items-center rounded-2xl bg-brand-bg/50 p-6 text-center"
               >
-                <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-primary/10 text-brand-primary">
+                <motion.span
+                  className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-primary/10 text-brand-primary"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                >
                   <Icon size={22} aria-hidden="true" />
-                </span>
+                </motion.span>
                 <span className="mt-4 inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-accent/15 font-mono text-xs font-bold text-brand-accent">
                   {index + 1}
                 </span>
                 <h3 className="mt-3 font-display text-lg font-semibold text-brand-text">{title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-brand-primary">{description}</p>
-              </article>
+              </motion.article>
             ))}
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Final CTA Section */}
-      <section className="mx-auto w-full max-w-7xl px-4 pb-16 pt-4 sm:px-6 lg:px-8">
+      <motion.section
+        className="mx-auto w-full max-w-7xl px-4 pb-16 pt-4 sm:px-6 lg:px-8"
+        variants={fadeUpVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+      >
         <div className="relative overflow-hidden rounded-2xl bg-brand-text p-6 text-white shadow-xl sm:p-10">
-          <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-brand-primary/20 blur-[80px]" />
-          <div className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-brand-accent/15 blur-[60px]" />
+          <motion.div
+            className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-brand-primary/20 blur-[80px]"
+            animate={{ scale: [1, 1.15, 1], opacity: [0.7, 1, 0.7] }}
+            transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.div
+            className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-brand-accent/15 blur-[60px]"
+            animate={{ scale: [1, 1.2, 1], opacity: [0.6, 0.9, 0.6] }}
+            transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+          />
 
           <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div>
@@ -637,7 +753,7 @@ export const HomePage = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {selectedProductDetails && (
         <ProductDetailModal
