@@ -102,9 +102,11 @@ export const Header = ({ onOpenSelection, selectionCount }: HeaderProps) => {
               <AnimatePresence mode="wait">
                 <motion.span
                   key={selectionCount}
-                  initial={{ scale: 0.5, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 1.5, opacity: 0 }}
+                  className="inline-block"
+                  style={{ perspective: '200px' }}
+                  initial={{ rotateX: 90, opacity: 0 }}
+                  animate={{ rotateX: 0, opacity: 1 }}
+                  exit={{ rotateX: -90, opacity: 0 }}
                   transition={{ duration: 0.3 }}
                 >
                   ({selectionCount})

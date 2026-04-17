@@ -23,6 +23,7 @@ import { ContactLogo, type ContactKind } from '../components/common/ContactLogo'
 import { Reveal, StaggerChildren, StaggerItem, AnimatedText } from '../components/common/AnimatedElements'
 import { DEFAULT_PRODUCT_IMAGE } from '../utils/constants'
 import { EASE_OUT_EXPO } from '../utils/animations'
+import { useParallaxHero } from '../hooks/useParallaxHero'
 
 const categoryDescriptions: Record<string, string> = {
   canecas: 'Modelos classicos e premium para presentear.',
@@ -287,9 +288,12 @@ export const HomePage = () => {
     return null
   }, [siteSettings.facebookUrl, siteSettings.instagramUrl, siteSettings.supportLink, siteSettings.websiteUrl])
 
+  const { sectionRef: heroRef, bgY, fgY } = useParallaxHero(0.3, 0.6)
+
   return (
     <div>
       <section
+        ref={heroRef}
         className="relative overflow-hidden border-b border-navy/10 grain-overlay"
         style={{
           backgroundImage: `linear-gradient(120deg, rgba(43, 43, 43, 0.94), rgba(95, 111, 90, 0.86), rgba(122, 143, 115, 0.72)), url(${heroBackground})`,
@@ -297,8 +301,13 @@ export const HomePage = () => {
           backgroundPosition: 'center',
         }}
       >
-        {/* Animated background particles */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        {/* Parallax background layer */}
+        <div
+          className="parallax-bg pointer-events-none absolute inset-0"
+          style={{ transform: `translateY(${bgY}px)` }}
+          aria-hidden="true"
+        >
+          {/* Animated background particles */}
           <motion.div
             className="absolute left-[10%] top-[20%] h-2 w-2 rounded-full bg-white/20"
             animate={{ y: [0, -100, 0], opacity: [0, 1, 0] }}
@@ -321,7 +330,11 @@ export const HomePage = () => {
           />
         </div>
 
-        <div className="relative z-[2] mx-auto grid w-full max-w-7xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-8 lg:py-24">
+        {/* Parallax foreground (text) layer */}
+        <div
+          className="parallax-fg relative z-[2] mx-auto grid w-full max-w-7xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-8 lg:py-24"
+          style={{ transform: `translateY(${fgY}px)` }}
+        >
           <div className="space-y-6">
             <motion.p
               className="inline-flex rounded-full border border-paper/25 bg-paper/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-paper"

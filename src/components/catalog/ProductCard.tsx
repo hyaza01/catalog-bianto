@@ -6,12 +6,14 @@ import { formatBRL } from '../../utils/format'
 import { cn } from '../../utils/cn'
 import { ProductImage } from '../common/ProductImage'
 import { useMagneticTilt } from '../../hooks/useMagneticTilt'
+import { useRipple } from '../../hooks/useRipple'
 
 interface ProductCardProps {
   product: Product
   onOpenDetails: (product: Product) => void
   onSelect: (product: Product) => void
   variant?: 'grid' | 'carousel'
+  index?: number
 }
 
 const readOptionalOldPrice = (product: Product): number | null => {
@@ -34,9 +36,10 @@ const readOptionalOldPrice = (product: Product): number | null => {
   return readNumber(productLike.oldPrice) ?? readNumber(metadata.old_price)
 }
 
-export const ProductCard = ({ product, onOpenDetails, onSelect }: ProductCardProps) => {
+export const ProductCard = ({ product, onOpenDetails, onSelect, index = 0 }: ProductCardProps) => {
   const [isSelecting, setIsSelecting] = useState(false)
   const { ref: tiltRef, style: tiltStyle, handleMouseMove: handleTiltMove, handleMouseLeave: handleTiltLeave } = useMagneticTilt({ maxTilt: 6, scale: 1.02 })
+  const createRipple = useRipple()
   const categoryLabel = product.categoryName?.trim() || CATEGORY_LABELS[product.category]
   const shortDescription =
     product.description.short.trim() || product.description.long.trim() || 'Produto personalizado sob encomenda.'
@@ -87,7 +90,7 @@ export const ProductCard = ({ product, onOpenDetails, onSelect }: ProductCardPro
               src={product.images[0]}
               alt={`Imagem do produto ${product.name}`}
               loading="lazy"
-              className="h-full w-full"
+              className={cn('h-full w-full', index % 2 === 0 ? 'product-float' : 'product-float-even')}
               imgClassName="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
           </div>
@@ -125,7 +128,7 @@ export const ProductCard = ({ product, onOpenDetails, onSelect }: ProductCardPro
 
           <div className="mt-auto space-y-0.5">
             {validOldPrice && <p className="text-[10px] leading-none text-[#A9B8A3] line-through md:text-xs">{formatBRL(validOldPrice)}</p>}
-            <p className="text-sm font-bold leading-tight text-[#2B2B2B] md:text-lg">{formatBRL(product.price)}</p>
+            <p className="text-sm font-bold leading-tight text-[#2B2B2B] md:text-lg price-shimmer">{formatBRL(product.price)}</p>
           </div>
 
           {/* CTAs responsivos: olho fixo e selecionar flexível sem ultrapassar o card. */}
@@ -141,11 +144,14 @@ export const ProductCard = ({ product, onOpenDetails, onSelect }: ProductCardPro
 
             <button
               type="button"
-              onClick={handleSelect}
+              onClick={(e) => {
+                handleSelect()
+                createRipple(e)
+              }}
               disabled={isUnavailable}
               aria-label={`Selecionar ${product.name}`}
               className={cn(
-                'inline-flex h-8 min-h-8 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-lg bg-[#5F6F5A] pl-1 pr-2 text-[11px] font-semibold text-white transition-all duration-300 hover:bg-[#7A8F73] hover:shadow-lg hover:shadow-[#5F6F5A]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5F6F5A] disabled:cursor-not-allowed disabled:bg-[#5F6F5A]/45 md:h-11 md:min-h-11 md:rounded-xl md:px-3 md:text-sm',
+                'ripple-btn inline-flex h-8 min-h-8 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-lg bg-[#5F6F5A] pl-1 pr-2 text-[11px] font-semibold text-white transition-all duration-300 hover:bg-[#7A8F73] hover:shadow-lg hover:shadow-[#5F6F5A]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5F6F5A] disabled:cursor-not-allowed disabled:bg-[#5F6F5A]/45 md:h-11 md:min-h-11 md:rounded-xl md:px-3 md:text-sm',
                 isSelecting && 'ring-2 ring-[#5F6F5A]/35',
               )}
             >

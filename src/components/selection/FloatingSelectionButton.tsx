@@ -63,9 +63,10 @@ export const FloatingSelectionButton = ({
         <motion.span
           key={count}
           className="absolute -right-1 -top-1 inline-flex min-h-5 min-w-5 items-center justify-center rounded-full bg-brand-accent px-1 font-mono text-[11px] font-bold text-brand-text"
-          initial={{ scale: 0.5, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 1.5, opacity: 0 }}
+          style={{ perspective: '200px' }}
+          initial={{ rotateX: 90, opacity: 0, scale: 0.5 }}
+          animate={{ rotateX: 0, opacity: 1, scale: 1 }}
+          exit={{ rotateX: -90, opacity: 0, scale: 1.5 }}
           transition={{ type: 'spring', stiffness: 500, damping: 15 }}
         >
           {count}
