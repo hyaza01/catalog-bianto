@@ -1,4 +1,4 @@
-import { Globe, MessageCircle, Phone } from 'lucide-react'
+import { Globe, Heart, MessageCircle, Phone } from 'lucide-react'
 import { useSiteSettings } from '../../hooks/useSiteSettings'
 import { formatBrazilPhoneDisplay, resolveBrazilWhatsAppNumber } from '../../utils/phone'
 import { buildDirectWhatsAppMessage, createDirectWhatsAppLink } from '../../utils/whatsapp'
@@ -35,12 +35,15 @@ export const Footer = () => {
     normalizeExternalUrl(settings.supportLink)
 
   return (
-    <footer className="border-t border-navy/10 bg-navy text-paper">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 pb-[calc(6.5rem+env(safe-area-inset-bottom))] pt-8 sm:gap-8 sm:px-6 sm:py-10 lg:px-8">
+    <footer className="border-t border-brand-text/10 bg-brand-text text-paper">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 pb-8 pt-8 sm:gap-8 sm:px-6 sm:pb-10 sm:pt-10 lg:px-8">
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="font-display text-2xl">Bianto Store</p>
-            <p className="mt-1 max-w-md text-sm text-paper/80">
+            <div className="inline-flex items-center gap-2.5">
+              <span className="rounded-lg border border-paper/20 bg-paper/10 px-2.5 py-1 text-xs font-bold tracking-[0.2em] text-paper">BIANTO</span>
+              <span className="font-display text-xl text-paper">Store</span>
+            </div>
+            <p className="mt-2 max-w-md text-sm leading-relaxed text-paper/75">
               Presentes personalizados para marcas e momentos especiais.
             </p>
           </div>
@@ -51,7 +54,7 @@ export const Footer = () => {
                 href={primaryLink}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-paper/25 text-paper transition hover:bg-paper/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-paper/20 text-paper/80 transition-all duration-200 hover:border-paper/40 hover:bg-paper/10 hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
                 aria-label="Abrir link oficial da Bianto Store"
               >
                 <Globe size={16} aria-hidden="true" />
@@ -61,19 +64,24 @@ export const Footer = () => {
               href={whatsappContactLink || normalizeExternalUrl(settings.supportLink) || '#'}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-paper/25 text-paper transition hover:bg-paper/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-paper/20 text-paper/80 transition-all duration-200 hover:border-emerald-400/40 hover:bg-emerald-500/10 hover:text-emerald-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
               aria-label="Abrir WhatsApp da Bianto Store"
             >
               <MessageCircle size={16} aria-hidden="true" />
             </a>
-            <span className="inline-flex items-center gap-2 rounded-full border border-paper/20 px-3 py-2 text-sm text-paper/85">
+            <span className="inline-flex items-center gap-2 rounded-xl border border-paper/15 bg-paper/5 px-3.5 py-2 text-sm text-paper/80">
               <Phone size={14} aria-hidden="true" />
               {contactPhoneDisplay || 'Configure contatos no Admin'}
             </span>
           </div>
         </div>
 
-        <p className="text-xs text-paper/65">Copyright {new Date().getFullYear()} Bianto Store. Todos os direitos reservados.</p>
+        <div className="flex flex-col items-center justify-between gap-2 border-t border-paper/10 pt-6 sm:flex-row">
+          <p className="text-xs text-paper/55">© {new Date().getFullYear()} Bianto Store. Todos os direitos reservados.</p>
+          <p className="inline-flex items-center gap-1 text-xs text-paper/45">
+            Feito com <Heart size={12} className="text-brand-accent" aria-hidden="true" /> para marcas que encantam
+          </p>
+        </div>
       </div>
     </footer>
   )

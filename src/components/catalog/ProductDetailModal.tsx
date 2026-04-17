@@ -230,12 +230,12 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
       )}
 
       <section
-        className="fixed left-1/2 top-1/2 z-[60] w-[calc(100%-1.5rem)] max-w-4xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl border border-navy/10 bg-white shadow-2xl"
+        className="fixed left-1/2 top-1/2 z-[60] w-[calc(100%-1.5rem)] max-w-4xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border border-brand-text/10 bg-white shadow-2xl"
         aria-label={`Detalhes do produto ${product.name}`}
       >
         <div className="grid max-h-[88vh] grid-cols-1 overflow-y-auto md:grid-cols-[1.1fr_1fr]">
-          <div className="border-b border-slate-200 p-4 md:border-b-0 md:border-r md:p-5">
-            <div className="aspect-[4/3] overflow-hidden rounded-2xl">
+          <div className="border-b border-brand-surface p-4 md:border-b-0 md:border-r md:p-5">
+            <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-brand-bg">
               <button
                 type="button"
                 onClick={() => setIsImageExpanded(true)}
@@ -258,8 +258,8 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
                     type="button"
                     aria-label={`Selecionar imagem ${index + 1} de ${product.name}`}
                     onClick={() => setSelectedImage(index)}
-                    className={`aspect-square overflow-hidden rounded-xl border transition ${
-                      selectedImage === index ? 'border-crimson' : 'border-slate-200 hover:border-navy/30'
+                    className={`aspect-square overflow-hidden rounded-xl border transition-all duration-200 ${
+                      selectedImage === index ? 'border-brand-primary ring-1 ring-brand-primary/30' : 'border-brand-surface hover:border-brand-primary/30'
                     }`}
                   >
                     <ProductImage
@@ -277,51 +277,51 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
             <div className="mb-4 flex items-start justify-between gap-3">
               <div>
                 <Badge variant="category">{product.categoryName || CATEGORY_LABELS[product.category]}</Badge>
-                <h2 className="mt-2 font-display text-3xl leading-tight text-navy">{product.name}</h2>
+                <h2 className="mt-2 font-display text-2xl leading-tight text-brand-text sm:text-3xl">{product.name}</h2>
               </div>
               <button
                 type="button"
                 onClick={onClose}
                 aria-label="Fechar detalhes do produto"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-500 transition hover:border-navy/40 hover:text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-brand-surface text-brand-primary transition-all duration-200 hover:border-brand-primary/30 hover:text-brand-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
               >
                 <X size={18} aria-hidden="true" />
               </button>
             </div>
 
-            <p className="text-sm leading-relaxed text-slate-600">{product.description.long}</p>
+            <p className="text-sm leading-relaxed text-brand-primary">{product.description.long}</p>
 
             <div className="mt-4 grid gap-2 text-sm">
               <p>
-                <span className="font-medium text-slate-600">Preco unitario:</span>{' '}
-                <span className="font-mono text-lg font-semibold text-crimson">{formatBRL(product.price)}</span>
+                <span className="font-medium text-brand-primary">Preço unitário:</span>{' '}
+                <span className="font-mono text-lg font-semibold text-brand-text">{formatBRL(product.price)}</span>
               </p>
               <p>
-                <span className="font-medium text-slate-600">Pedido minimo:</span> {product.minQuantity} unidades
+                <span className="font-medium text-brand-primary">Pedido mínimo:</span> {product.minQuantity} unidades
               </p>
             </div>
 
-            <div className="mt-4 grid gap-2 rounded-xl border border-emerald-100 bg-emerald-50/70 p-3 text-sm">
+            <div className="mt-4 grid gap-2 rounded-xl border border-brand-primary/15 bg-brand-primary/5 p-3 text-sm">
               {safeRating !== null && safeReviews !== null ? (
-                <p className="inline-flex items-center gap-1 font-semibold text-emerald-900">
-                  <Star size={14} className="fill-amber-400 text-amber-400" aria-hidden="true" />
-                  {safeRating.toFixed(1)} ({safeReviews} avaliacoes)
+                <p className="inline-flex items-center gap-1 font-semibold text-brand-text">
+                  <Star size={14} className="fill-brand-accent text-brand-accent" aria-hidden="true" />
+                  {safeRating.toFixed(1)} ({safeReviews} avaliações)
                 </p>
               ) : (
-                <p className="font-semibold text-emerald-900">Novo no catalogo</p>
+                <p className="font-semibold text-brand-text">Novo no catálogo</p>
               )}
 
               {product.productionTime && (
-                <p className="text-emerald-800">Producao estimada em {product.productionTime}</p>
+                <p className="text-brand-primary">Produção estimada em {product.productionTime}</p>
               )}
             </div>
 
             {product.variants?.sizes && product.variants.sizes.length > 0 && (
               <div className="mt-4">
-                <p className="text-sm font-medium text-slate-700">Tamanhos disponiveis</p>
+                <p className="text-sm font-medium text-brand-text">Tamanhos disponíveis</p>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {product.variants.sizes.map((size) => (
-                    <span key={size} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
+                    <span key={size} className="rounded-full bg-brand-bg px-3 py-1 text-xs font-medium text-brand-text">
                       {size}
                     </span>
                   ))}
@@ -331,10 +331,10 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
 
             {product.variants?.colors && product.variants.colors.length > 0 && (
               <div className="mt-4">
-                <p className="text-sm font-medium text-slate-700">Cores disponiveis</p>
+                <p className="text-sm font-medium text-brand-text">Cores disponíveis</p>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {product.variants.colors.map((color) => (
-                    <span key={color} className="rounded-full bg-navy/10 px-3 py-1 text-xs font-medium text-navy">
+                    <span key={color} className="rounded-full bg-brand-primary/10 px-3 py-1 text-xs font-medium text-brand-primary">
                       {color}
                     </span>
                   ))}
@@ -342,8 +342,8 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
               </div>
             )}
 
-            <label className="mt-5 grid gap-1 text-sm font-medium text-slate-700" htmlFor="product-note">
-              Observacao de personalizacao
+            <label className="mt-5 grid gap-1 text-sm font-medium text-brand-text" htmlFor="product-note">
+              Observação de personalização
               <textarea
                 id="product-note"
                 aria-label="Informar observacao para personalizacao"
@@ -351,18 +351,18 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
                 value={note}
                 onChange={(event) => setNote(event.target.value)}
                 placeholder="Ex.: aplicar logo frontal, frase no verso e acabamento fosco"
-                className="resize-none rounded-xl border border-slate-200 px-3 py-2 text-sm text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
+                className="resize-none rounded-xl border border-brand-surface px-3 py-2 text-sm text-brand-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
               />
             </label>
 
             <div className="mt-4 flex items-center justify-between gap-4">
               <div>
-                <p className="text-sm font-medium text-slate-700">Quantidade</p>
-                <div className="mt-1 inline-flex items-center rounded-xl border border-slate-200">
+                <p className="text-sm font-medium text-brand-text">Quantidade</p>
+                <div className="mt-1 inline-flex items-center rounded-xl border border-brand-surface">
                   <button
                     type="button"
                     onClick={() => setQuantity((current) => Math.max(product.minQuantity, current - 1))}
-                    className="inline-flex h-10 w-10 items-center justify-center text-slate-600 transition hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
+                    className="inline-flex h-10 w-10 items-center justify-center text-brand-primary transition hover:bg-brand-bg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
                     aria-label="Diminuir quantidade"
                   >
                     <Minus size={16} aria-hidden="true" />
@@ -373,12 +373,12 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
                     min={product.minQuantity}
                     value={quantity}
                     onChange={(event) => setQuantity(Math.max(product.minQuantity, Number(event.target.value) || 0))}
-                    className="h-10 w-20 border-x border-slate-200 text-center font-medium text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
+                    className="h-10 w-20 border-x border-brand-surface text-center font-medium text-brand-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
                   />
                   <button
                     type="button"
                     onClick={() => setQuantity((current) => current + 1)}
-                    className="inline-flex h-10 w-10 items-center justify-center text-slate-600 transition hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
+                    className="inline-flex h-10 w-10 items-center justify-center text-brand-primary transition hover:bg-brand-bg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
                     aria-label="Aumentar quantidade"
                   >
                     <Plus size={16} aria-hidden="true" />
@@ -397,7 +397,7 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
                 aria-label="Adicionar produto a selecao"
               >
                 <Check size={16} aria-hidden="true" />
-                Adicionar a selecao
+                Adicionar à seleção
               </Button>
             </div>
           </div>

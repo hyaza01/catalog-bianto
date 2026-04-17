@@ -9,10 +9,10 @@ interface BadgeProps {
 }
 
 const variantMap: Record<BadgeVariant, string> = {
-  default: 'bg-slate-100 text-slate-700',
-  category: 'bg-navy/10 text-navy',
-  featured: 'bg-amber/20 text-amber-700',
-  unavailable: 'bg-crimson/15 text-crimson',
+  default: 'bg-brand-surface/60 text-brand-text',
+  category: 'bg-brand-primary/10 text-brand-primary',
+  featured: 'bg-brand-accent/20 text-brand-accent',
+  unavailable: 'bg-brand-primary/15 text-brand-primary',
 }
 
 export const Badge = ({ children, variant = 'default', className }: PropsWithChildren<BadgeProps>) => {

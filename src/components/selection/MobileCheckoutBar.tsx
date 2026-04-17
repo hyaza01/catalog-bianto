@@ -37,7 +37,7 @@ export const MobileCheckoutBar = ({
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 block border-t border-emerald-200 bg-white/95 backdrop-blur md:hidden">
+    <div className="fixed bottom-0 left-0 right-0 z-50 block border-t border-brand-surface bg-white/95 backdrop-blur-md md:hidden">
       <div className="mx-auto flex w-full max-w-7xl items-center gap-3 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
         <button
           type="button"
@@ -45,8 +45,8 @@ export const MobileCheckoutBar = ({
           aria-label="Abrir resumo da selecao"
           className="min-w-0 flex-1 text-left"
         >
-          <p className="truncate text-xs text-slate-500">{totalItems} itens na selecao</p>
-          <p className="truncate text-base font-extrabold text-navy">{formatBRL(totalValue)}</p>
+          <p className="truncate text-xs text-brand-primary">{totalItems} itens na seleção</p>
+          <p className="truncate text-base font-extrabold text-brand-text">{formatBRL(totalValue)}</p>
         </button>
 
         <Button
