@@ -11,7 +11,7 @@ import { useScrollProgress } from '../../hooks/useScrollProgress'
 import { siteSettingsQueryKey } from '../../hooks/useSiteSettings'
 import { productsQueryKey } from '../../hooks/useProducts'
 import { publicCategoriesQueryKey } from '../../hooks/usePublicCategories'
-import { pageTransition } from '../../utils/animations'
+import { PageTransition } from '../PageTransition'
 
 export const Layout = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
@@ -87,16 +87,11 @@ export const Layout = () => {
       <Header onOpenSelection={openSelectionDrawer} selectionCount={totalQuantity} />
 
       <AnimatePresence mode="wait">
-        <motion.main
-          key={location.pathname}
-          className={hasMobileFab ? 'pb-24 md:pb-0' : undefined}
-          variants={pageTransition}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-        >
-          <Outlet context={{ openSelectionDrawer }} />
-        </motion.main>
+        <PageTransition key={location.pathname}>
+          <main className={hasMobileFab ? 'pb-24 md:pb-0' : undefined}>
+            <Outlet context={{ openSelectionDrawer }} />
+          </main>
+        </PageTransition>
       </AnimatePresence>
 
       <Footer />

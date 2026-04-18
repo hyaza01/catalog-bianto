@@ -1,11 +1,10 @@
 import { Eye, ShoppingBag } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { motion, AnimatePresence, useMotionValue, useTransform, useReducedMotion } from 'framer-motion'
 import { CATEGORY_LABELS, type Product } from '../../types/product'
 import { formatBRL } from '../../utils/format'
 import { cn } from '../../utils/cn'
 import { ProductImage } from '../common/ProductImage'
-import { useMagneticTilt } from '../../hooks/useMagneticTilt'
 import { useRipple } from '../../hooks/useRipple'
 
 interface ProductCardProps {
@@ -38,7 +37,69 @@ const readOptionalOldPrice = (product: Product): number | null => {
 
 export const ProductCard = ({ product, onOpenDetails, onSelect, index = 0 }: ProductCardProps) => {
   const [isSelecting, setIsSelecting] = useState(false)
-  const { ref: tiltRef, style: tiltStyle, handleMouseMove: handleTiltMove, handleMouseLeave: handleTiltLeave } = useMagneticTilt({ maxTilt: 6, scale: 1.02 })
+  const shouldReduce = useReducedMotion()
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+  const tiltEnabled = !shouldReduce && !isMobile
+
+  // Framer Motion 3D tilt
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const rotateX = useTransform(y, [-0.5, 0.5], tiltEnabled ? [6, -6] : [0, 0])
+  const rotateY = useTransform(x, [-0.5, 0.5], tiltEnabled ? [-6, 6] : [0, 0])
+  const imgX = useTransform(x, [-0.5, 0.5], tiltEnabled ? ['-8px', '8px'] : ['0px', '0px'])
+  const imgY = useTransform(y, [-0.5, 0.5], tiltEnabled ? ['-8px', '8px'] : ['0px', '0px'])
+
+  function onMouseMove(e: React.MouseEvent<HTMLElement>) {
+    if (!tiltEnabled) return
+    const r = e.currentTarget.getBoundingClientRect()
+    x.set((e.clientX - r.left) / r.width - 0.5)
+    y.set((e.clientY - r.top) / r.height - 0.5)
+  }
+
+  function onMouseLeave() {
+    x.set(0)
+    y.set(0)
+  }
+
+  // SVG distortion filter (desktop only)
+  const imgContainerRef = useRef<HTMLDivElement>(null)
+  function onCardMouseEnter() {
+    if (isMobile || shouldReduce) return
+    const el = document.getElementById('displace-map')
+    if (!el) return
+    let start: number | null = null
+    const duration = 300
+    function tick(ts: number) {
+      if (!start) start = ts
+      const progress = Math.min((ts - start) / duration, 1)
+      el!.setAttribute('scale', String(progress * 18))
+      if (progress < 1) requestAnimationFrame(tick)
+    }
+    requestAnimationFrame(tick)
+    if (imgContainerRef.current) {
+      imgContainerRef.current.style.filter = 'url(#distort)'
+    }
+  }
+  function onCardMouseLeave() {
+    const el = document.getElementById('displace-map')
+    if (!el) return
+    let start: number | null = null
+    const duration = 300
+    const from = Number(el.getAttribute('scale') || '0')
+    function tick(ts: number) {
+      if (!start) start = ts
+      const progress = Math.min((ts - start) / duration, 1)
+      el!.setAttribute('scale', String(from * (1 - progress)))
+      if (progress < 1) requestAnimationFrame(tick)
+    }
+    requestAnimationFrame(tick)
+    if (imgContainerRef.current) {
+      setTimeout(() => {
+        if (imgContainerRef.current) imgContainerRef.current.style.filter = ''
+      }, duration)
+    }
+  }
+
   const createRipple = useRipple()
   const categoryLabel = product.categoryName?.trim() || CATEGORY_LABELS[product.category]
   const shortDescription =
@@ -67,11 +128,14 @@ export const ProductCard = ({ product, onOpenDetails, onSelect, index = 0 }: Pro
   }
 
   return (
-    <article
-      ref={tiltRef}
-      onMouseMove={handleTiltMove}
-      onMouseLeave={handleTiltLeave}
-      style={tiltStyle}
+    <motion.article
+      layoutId={`product-card-${product.id}`}
+      onMouseMove={onMouseMove}
+      onMouseLeave={() => { onMouseLeave(); onCardMouseLeave() }}
+      onMouseEnter={onCardMouseEnter}
+      style={{ rotateX, rotateY, transformPerspective: 700 }}
+      transition={{ type: 'spring', stiffness: 250, damping: 25 }}
+      whileHover={tiltEnabled ? { scale: 1.02 } : undefined}
       className={cn(
         'group flex h-full w-full max-w-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#E8DDD4] bg-[#FDFCFB] shadow-[0_2px_8px_rgba(43,43,43,0.08)] glow-hover',
         isUnavailable && 'opacity-70',
@@ -85,14 +149,16 @@ export const ProductCard = ({ product, onOpenDetails, onSelect, index = 0 }: Pro
           aria-label={`Abrir detalhes de ${product.name}`}
           className="relative block w-full min-w-0 overflow-hidden text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5F6F5A]"
         >
-          <div className="w-full aspect-square border-b border-[#E8DDD4] bg-[#EDE6DE]">
-            <ProductImage
-              src={product.images[0]}
-              alt={`Imagem do produto ${product.name}`}
-              loading="lazy"
-              className={cn('h-full w-full', index % 2 === 0 ? 'product-float' : 'product-float-even')}
-              imgClassName="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-            />
+          <div ref={imgContainerRef} className="w-full aspect-square border-b border-[#E8DDD4] bg-[#EDE6DE] overflow-hidden">
+            <motion.div style={tiltEnabled ? { x: imgX, y: imgY, scale: 1.15 } : undefined} className="h-full w-full">
+              <ProductImage
+                src={product.images[0]}
+                alt={`Imagem do produto ${product.name}`}
+                loading="lazy"
+                className={cn('h-full w-full', index % 2 === 0 ? 'product-float' : 'product-float-even')}
+                imgClassName="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </motion.div>
           </div>
 
           {isUnavailable && (
@@ -172,6 +238,6 @@ export const ProductCard = ({ product, onOpenDetails, onSelect, index = 0 }: Pro
           </div>
         </div>
       </div>
-    </article>
+    </motion.article>
   )
 }

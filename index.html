@@ -14,6 +14,17 @@
     <title>Bianto Store | Catalogo de Personalizados</title>
   </head>
   <body>
+    <svg style="display:none" width="0" height="0">
+      <defs>
+        <filter id="distort">
+          <feTurbulence type="turbulence" baseFrequency="0.02"
+            numOctaves="3" result="noise" seed="2"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise"
+            scale="0" xChannelSelector="R" yChannelSelector="G"
+            id="displace-map"/>
+        </filter>
+      </defs>
+    </svg>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

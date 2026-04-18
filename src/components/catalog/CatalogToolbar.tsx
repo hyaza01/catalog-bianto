@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Search, SlidersHorizontal, X } from 'lucide-react'
+import { motion } from 'framer-motion'
 import { cn } from '../../utils/cn'
+import { AnimatedCounter } from '../AnimatedCounter'
 
 interface CatalogToolbarProps {
   search: string
@@ -20,6 +22,7 @@ export const CatalogToolbar = ({
   onClearFilters,
 }: CatalogToolbarProps) => {
   const [isResultBumping, setIsResultBumping] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
 
   useEffect(() => {
     setIsResultBumping(true)
@@ -35,7 +38,12 @@ export const CatalogToolbar = ({
   return (
     <div className="mb-3 space-y-3 bg-transparent transition-all duration-300">
       <div className="flex flex-row items-center gap-2 sm:justify-between">
-        <label className="relative block w-full flex-1 sm:max-w-xl" htmlFor="catalog-search">
+        <motion.label
+          className="relative block w-full flex-1 sm:max-w-xl"
+          htmlFor="catalog-search"
+          animate={isFocused ? { scale: 1.02 } : { scale: 1 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+        >
           <Search
             size={16}
             className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-brand-muted transition-colors duration-200"
@@ -48,9 +56,11 @@ export const CatalogToolbar = ({
             placeholder="Buscar por nome ou tag..."
             value={search}
             onChange={(event) => onSearchChange(event.target.value)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
             className="h-10 w-full rounded-xl border border-brand-surface bg-white pl-10 pr-3 text-sm text-brand-text placeholder:text-brand-muted transition-all duration-200 focus-visible:border-brand-primary focus-visible:ring-1 focus-visible:ring-brand-primary/30 focus-visible:outline-none sm:h-11"
           />
-        </label>
+        </motion.label>
 
         <button
           type="button"
@@ -64,14 +74,10 @@ export const CatalogToolbar = ({
 
       <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-brand-primary sm:text-sm">
         <p className="font-medium">
-          <span
-            className={cn(
+          <AnimatedCounter value={resultCount} className={cn(
               'inline-flex min-w-7 items-center justify-center rounded-md px-1.5 font-bold text-brand-text transition-all duration-500',
               isResultBumping && 'scale-110 bg-brand-accent/20',
-            )}
-          >
-            {resultCount}
-          </span>{' '}
+            )} />{' '}
           produtos encontrados
         </p>
 

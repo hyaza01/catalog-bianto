@@ -1,6 +1,7 @@
 import {
   ArrowRight,
   Check,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   MessageCircle,
@@ -21,9 +22,13 @@ import { ProductCard } from '../components/catalog/ProductCard'
 import { ProductDetailModal } from '../components/catalog/ProductDetailModal'
 import { ContactLogo, type ContactKind } from '../components/common/ContactLogo'
 import { Reveal, StaggerChildren, StaggerItem, AnimatedText } from '../components/common/AnimatedElements'
+import { FadeInSection } from '../components/FadeInSection'
+import { AnimatedTitle } from '../components/AnimatedTitle'
+import { MagneticButton } from '../components/MagneticButton'
 import { DEFAULT_PRODUCT_IMAGE } from '../utils/constants'
 import { EASE_OUT_EXPO } from '../utils/animations'
 import { useParallaxHero } from '../hooks/useParallaxHero'
+import { useScrollVelocityTilt } from '../hooks/useScrollVelocityTilt'
 
 const categoryDescriptions: Record<string, string> = {
   canecas: 'Modelos classicos e premium para presentear.',
@@ -289,6 +294,7 @@ export const HomePage = () => {
   }, [siteSettings.facebookUrl, siteSettings.instagramUrl, siteSettings.supportLink, siteSettings.websiteUrl])
 
   const { sectionRef: heroRef, bgY, fgY } = useParallaxHero(0.3, 0.6)
+  const smoothSkew = useScrollVelocityTilt()
 
   return (
     <div>
@@ -350,15 +356,12 @@ export const HomePage = () => {
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               transition={{ duration: 0.8, delay: 0.2, ease: [...EASE_OUT_EXPO] }}
             >
-              {siteSettings.content.heroTitle}
-              <motion.span
+              <AnimatedTitle text={siteSettings.content.heroTitle} delay={0.2} />
+              <AnimatedTitle
+                text={siteSettings.content.heroSubtitle}
                 className="block italic text-paper"
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.5, ease: [...EASE_OUT_EXPO] }}
-              >
-                {siteSettings.content.heroSubtitle}
-              </motion.span>
+                delay={0.5}
+              />
             </motion.h1>
             <motion.p
               className="max-w-xl text-base text-paper/85 sm:text-lg"
@@ -374,30 +377,34 @@ export const HomePage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.6, ease: [...EASE_OUT_EXPO] }}
             >
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                <Button
-                  size="lg"
-                  variant="primary"
-                  onClick={() => navigate('/catalogo')}
-                  aria-label="Navegar para o catalogo"
-                >
-                  Ver Catalogo
-                  <ArrowRight size={16} aria-hidden="true" />
-                </Button>
-              </motion.div>
-              {whatsappLink && (
+              <MagneticButton>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
                   <Button
                     size="lg"
-                    variant="outline"
-                    onClick={() => window.open(whatsappLink, '_blank', 'noopener,noreferrer')}
-                    aria-label="Falar com a Bianto Store no WhatsApp"
-                    className="border border-white/40 bg-white/5 text-white backdrop-blur-sm hover:bg-white/20 hover:border-white hover:text-white"
+                    variant="primary"
+                    onClick={() => navigate('/catalogo')}
+                    aria-label="Navegar para o catalogo"
+                  >
+                    Ver Catalogo
+                    <ArrowRight size={16} aria-hidden="true" />
+                  </Button>
+                </motion.div>
+              </MagneticButton>
+              {whatsappLink && (
+                <MagneticButton>
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      onClick={() => window.open(whatsappLink, '_blank', 'noopener,noreferrer')}
+                      aria-label="Falar com a Bianto Store no WhatsApp"
+                      className="border border-white/40 bg-white/5 text-white backdrop-blur-sm hover:bg-white/20 hover:border-white hover:text-white"
                   >
                     <MessageCircle size={16} className="text-green-400" aria-hidden="true" />
                     Falar no WhatsApp
                   </Button>
                 </motion.div>
+                </MagneticButton>
               )}
             </motion.div>
           </div>
@@ -430,14 +437,28 @@ export const HomePage = () => {
             </div>
           </motion.div>
         </div>
+
+        {/* Scroll arrow */}
+        <motion.div
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-[3] flex flex-col items-center gap-1 cursor-pointer"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+          onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
+        >
+          <span className="text-white/50 text-xs tracking-widest uppercase">scroll</span>
+          <ChevronDown className="text-white/40 w-5 h-5" />
+        </motion.div>
       </section>
 
+      <FadeInSection>
       <section className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <Reveal direction="up" delay={0.1}>
           <div className="mb-6 flex items-end justify-between gap-4">
             <div>
               <p className="text-sm uppercase tracking-[0.18em] text-slate-500">{siteSettings.content.navTitle}</p>
-              <AnimatedText text={siteSettings.content.categoriesTitle} className="font-display text-4xl text-navy" />
+              <motion.div style={{ skewX: smoothSkew }}>
+                <AnimatedText text={siteSettings.content.categoriesTitle} className="font-display text-4xl text-navy" />
+              </motion.div>
             </div>
           </div>
         </Reveal>
@@ -520,13 +541,17 @@ export const HomePage = () => {
           </div>
         )}
       </section>
+      </FadeInSection>
 
+      <FadeInSection delay={0.1}>
       <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <Reveal direction="up" delay={0.1}>
           <div className="mb-6 flex items-end justify-between gap-4">
             <div>
               <p className="text-sm uppercase tracking-[0.18em] text-slate-500">Curadoria</p>
-              <AnimatedText text={siteSettings.content.productsTitle} className="font-display text-4xl text-navy" />
+              <motion.div style={{ skewX: smoothSkew }}>
+                <AnimatedText text={siteSettings.content.productsTitle} className="font-display text-4xl text-navy" />
+              </motion.div>
             </div>
             <motion.div whileHover={{ scale: 1.05, x: 4 }} whileTap={{ scale: 0.97 }}>
               <Button 
@@ -601,14 +626,18 @@ export const HomePage = () => {
           </div>
         </div>
       </section>
+      </FadeInSection>
 
       {contactLinks.length > 0 && (
+        <FadeInSection>
         <section className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <Reveal direction="up">
             <div className="rounded-3xl border border-navy/10 bg-white p-6 shadow-sm sm:p-8 glow-hover">
               <div className="mb-5">
                 <p className="text-sm uppercase tracking-[0.18em] text-slate-500">Canais oficiais</p>
-                <AnimatedText text="Fale com a Bianto Store" className="font-display text-4xl text-navy" />
+                <motion.div style={{ skewX: smoothSkew }}>
+                  <AnimatedText text="Fale com a Bianto Store" className="font-display text-4xl text-navy" />
+                </motion.div>
               </div>
 
               <StaggerChildren className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
@@ -636,14 +665,18 @@ export const HomePage = () => {
             </div>
           </Reveal>
         </section>
+        </FadeInSection>
       )}
 
+      <FadeInSection>
       <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <Reveal direction="up">
           <div className="rounded-3xl border border-navy/10 bg-white p-6 shadow-sm sm:p-8 glow-hover">
             <div className="mb-8">
               <p className="text-sm uppercase tracking-[0.18em] text-slate-500">Processo simples</p>
-              <AnimatedText text="Como funciona" className="font-display text-4xl text-navy" />
+              <motion.div style={{ skewX: smoothSkew }}>
+                <AnimatedText text="Como funciona" className="font-display text-4xl text-navy" />
+              </motion.div>
             </div>
 
             <StaggerChildren className="grid gap-4 md:grid-cols-3">
@@ -669,8 +702,11 @@ export const HomePage = () => {
                   >
                     <motion.span
                       className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-crimson/10 text-crimson"
+                      initial={{ scale: 0, rotate: -20 }}
+                      whileInView={{ scale: 1, rotate: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.15 + 0.3, type: 'spring', stiffness: 280 }}
                       whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.6 }}
                     >
                       <Icon size={20} aria-hidden="true" />
                     </motion.span>
@@ -685,7 +721,9 @@ export const HomePage = () => {
           </div>
         </Reveal>
       </section>
+      </FadeInSection>
 
+      <FadeInSection>
       <section className="mx-auto w-full max-w-7xl px-4 pb-16 pt-8 sm:px-6 lg:px-8">
         <Reveal direction="up" delay={0.1}>
           <motion.div
@@ -715,7 +753,17 @@ export const HomePage = () => {
                 </p>
               </div>
 
-              <motion.div whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                whileHover={{ scale: 1.06 }}
+                whileTap={{ scale: 0.95 }}
+                animate={{
+                  boxShadow: [
+                    '0 0 0 0px rgba(22,163,74,0.5)',
+                    '0 0 0 14px rgba(22,163,74,0)',
+                  ],
+                }}
+                transition={{ duration: 1.6, repeat: Infinity, ease: 'easeOut' }}
+              >
                 <Button
                   variant="whatsapp"
                   size="lg"
@@ -748,6 +796,7 @@ export const HomePage = () => {
           </motion.div>
         </Reveal>
       </section>
+      </FadeInSection>
 
       {selectedProductDetails && (
         <ProductDetailModal

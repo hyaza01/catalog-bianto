@@ -505,6 +505,7 @@ export const CatalogPage = () => {
           ) : (
             <ProductGrid
               products={filteredProducts}
+              isLoading={isLoading}
               onOpenDetails={setSelectedProduct}
               onSelect={(product) => addItem(product.id, product.minQuantity, '', product.minQuantity)}
             />

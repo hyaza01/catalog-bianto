@@ -242,6 +242,7 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
       <motion.section
         className="fixed left-1/2 top-1/2 z-[60] w-[calc(100%-1.5rem)] max-w-4xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl border border-navy/10 bg-white shadow-2xl"
         aria-label={`Detalhes do produto ${product.name}`}
+        layoutId={`product-card-${product.id}`}
         variants={modalVariants}
         initial="hidden"
         animate="visible"
