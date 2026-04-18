@@ -240,11 +240,11 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
       )}
 
       <div
-        className="fixed inset-0 z-[60] flex items-center justify-center p-3"
+        className="fixed inset-0 z-[60] flex items-start justify-center overflow-y-auto p-3 md:items-center"
         onClick={onClose}
       >
         <motion.section
-          className="relative w-full max-w-4xl overflow-hidden rounded-3xl border border-navy/10 bg-white shadow-2xl max-h-[90vh]"
+          className="relative my-auto w-full max-w-4xl overflow-hidden rounded-3xl border border-navy/10 bg-white shadow-2xl md:my-0 md:max-h-[90vh]"
           aria-label={`Detalhes do produto ${product.name}`}
           variants={modalVariants}
           initial="hidden"
@@ -252,7 +252,7 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
           exit="exit"
           onClick={(e) => e.stopPropagation()}
         >
-        <div className="grid max-h-[90vh] grid-cols-1 overflow-y-auto md:grid-cols-[1.1fr_1fr]">
+        <div className="grid grid-cols-1 md:max-h-[90vh] md:overflow-y-auto md:grid-cols-[1.1fr_1fr]">
           <div className="border-b border-slate-200 p-4 md:border-b-0 md:border-r md:p-5">
             <div className="aspect-[4/3] overflow-hidden rounded-2xl">
               <button
