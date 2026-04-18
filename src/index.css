@@ -136,6 +136,8 @@
   background: linear-gradient(90deg, #5F6F5A, #C9A46A, #7A8F73);
   z-index: 9999;
   transform-origin: left;
+  transform: scaleX(0);
+  will-change: transform;
   pointer-events: none;
 }
 
@@ -273,11 +275,9 @@
 }
 .product-float {
   animation: product-float var(--duration-float) ease-in-out infinite;
-  will-change: transform;
 }
 .product-float-even {
   animation: product-float var(--duration-float) ease-in-out var(--duration-float-delay) infinite;
-  will-change: transform;
 }
 .group:hover .product-float,
 .group:hover .product-float-even {

@@ -1,10 +1,9 @@
 import { Menu, ShoppingBag, X } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Button } from '../ui/Button'
 import { cn } from '../../utils/cn'
-import { useScrollProgress } from '../../hooks/useScrollProgress'
 import { EASE_OUT_EXPO } from '../../utils/animations'
 
 interface HeaderProps {
@@ -20,10 +19,33 @@ const navigationLinks = [
 
 export const Header = ({ onOpenSelection, selectionCount }: HeaderProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const { scrollY, direction } = useScrollProgress()
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isHidden, setIsHidden] = useState(false)
+  const lastYRef = useRef(0)
 
-  const isScrolled = scrollY > 20
-  const isHidden = direction === 'down' && scrollY > 300
+  useEffect(() => {
+    let ticking = false
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        const y = window.scrollY
+        const dir = y > lastYRef.current ? 'down' : 'up'
+        lastYRef.current = y
+
+        const scrolled = y > 20
+        const hidden = dir === 'down' && y > 300
+
+        // Só chama setState se o valor realmente mudou
+        setIsScrolled((prev) => (prev !== scrolled ? scrolled : prev))
+        setIsHidden((prev) => (prev !== hidden ? hidden : prev))
+
+        ticking = false
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
     <motion.header

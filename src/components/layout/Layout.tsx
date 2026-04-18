@@ -18,7 +18,7 @@ export const Layout = () => {
   const queryClient = useQueryClient()
   const location = useLocation()
   const { totalQuantity } = useSelection()
-  const { progress } = useScrollProgress()
+  const { barRef } = useScrollProgress()
   const cursorGlowRef = useRef<HTMLDivElement>(null)
   const isCatalogRoute = location.pathname.startsWith('/catalogo')
   const hasMobileFab = !isCatalogRoute
@@ -48,8 +48,8 @@ export const Layout = () => {
     <div className="min-h-screen bg-paper text-navy">
       {/* Scroll progress bar */}
       <div
+        ref={barRef}
         className="scroll-progress-bar"
-        style={{ transform: `scaleX(${progress})` }}
         aria-hidden="true"
       />
 
