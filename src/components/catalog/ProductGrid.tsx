@@ -59,7 +59,7 @@ export const ProductGrid = ({ products, isLoading, onOpenDetails, onSelect }: Pr
                 <motion.li
                   key={product.id}
                   layout
-                  layoutId={`product-${product.id}`}
+                  layoutId={`product-card-${product.id}`}
                   className="h-full min-w-0 list-none"
                   variants={fadeUp}
                   initial={{ opacity: 0, scale: 0.8 }}

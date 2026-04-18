@@ -9,7 +9,7 @@ import {
 } from 'lucide-react'
 import { useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useProducts } from '../hooks/useProducts'
 import { usePublicCategories } from '../hooks/usePublicCategories'
 import { useSiteSettings } from '../hooks/useSiteSettings'
@@ -798,16 +798,18 @@ export const HomePage = () => {
       </section>
       </FadeInSection>
 
-      {selectedProductDetails && (
-        <ProductDetailModal
-          product={selectedProductDetails}
-          onClose={() => setSelectedProductDetails(null)}
-          onAddToSelection={(productId, quantity, note) => {
-            addItem(productId, quantity, note, selectedProductDetails.minQuantity);
-            setSelectedProductDetails(null);
-          }}
-        />
-      )}
+      <AnimatePresence>
+        {selectedProductDetails && (
+          <ProductDetailModal
+            product={selectedProductDetails}
+            onClose={() => setSelectedProductDetails(null)}
+            onAddToSelection={(productId, quantity, note) => {
+              addItem(productId, quantity, note, selectedProductDetails.minQuantity);
+              setSelectedProductDetails(null);
+            }}
+          />
+        )}
+      </AnimatePresence>
     </div>
   )
 }

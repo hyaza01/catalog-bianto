@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
 import { useOutletContext, useSearchParams } from 'react-router-dom'
 import { CatalogFilters } from '../components/catalog/CatalogFilters'
 import { CatalogToolbar } from '../components/catalog/CatalogToolbar'
@@ -528,17 +529,19 @@ export const CatalogPage = () => {
         onOpenSelection={openSelectionDrawer}
       />
 
-      {selectedProduct && (
-        <ProductDetailModal
-          key={selectedProduct.id}
-          product={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
-          onAddToSelection={(productId, quantity, note) => {
-            const selected = products.find((product) => product.id === productId)
-            addItem(productId, quantity, note, selected?.minQuantity ?? 1)
-          }}
-        />
-      )}
+      <AnimatePresence>
+        {selectedProduct && (
+          <ProductDetailModal
+            key={selectedProduct.id}
+            product={selectedProduct}
+            onClose={() => setSelectedProduct(null)}
+            onAddToSelection={(productId, quantity, note) => {
+              const selected = products.find((product) => product.id === productId)
+              addItem(productId, quantity, note, selected?.minQuantity ?? 1)
+            }}
+          />
+        )}
+      </AnimatePresence>
     </div>
   )
 }

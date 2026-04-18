@@ -100,35 +100,6 @@ export const Reveal = ({
   )
 }
 
-interface ParallaxProps {
-  children: React.ReactNode
-  className?: string
-  speed?: number
-  offset?: number
-}
-
-export const Parallax = ({
-  children,
-  className = '',
-  speed = 0.3,
-  offset = 50,
-}: ParallaxProps) => {
-  return (
-    <motion.div
-      className={className}
-      initial={{ y: offset }}
-      whileInView={{ y: -offset * speed }}
-      viewport={{ once: false, amount: 0.1 }}
-      transition={{
-        duration: 0.8,
-        ease: [...EASE_OUT_EXPO],
-      }}
-    >
-      {children}
-    </motion.div>
-  )
-}
-
 interface StaggerChildrenProps {
   children: React.ReactNode
   className?: string
@@ -190,38 +161,6 @@ export const StaggerItem = ({ children, className = '' }: StaggerItemProps) => {
             ease: [...EASE_OUT_EXPO],
           },
         },
-      }}
-    >
-      {children}
-    </motion.div>
-  )
-}
-
-interface MagneticButtonProps {
-  children: React.ReactNode
-  className?: string
-  strength?: number
-}
-
-export const MagneticButton = ({
-  children,
-  className = '',
-  strength = 0.3,
-}: MagneticButtonProps) => {
-  return (
-    <motion.div
-      className={className}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.97 }}
-      transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-      onMouseMove={(e) => {
-        const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
-        const x = (e.clientX - rect.left - rect.width / 2) * strength
-        const y = (e.clientY - rect.top - rect.height / 2) * strength
-        ;(e.currentTarget as HTMLElement).style.transform = `translate(${x}px, ${y}px) scale(1.05)`
-      }}
-      onMouseLeave={(e) => {
-        ;(e.currentTarget as HTMLElement).style.transform = ''
       }}
     >
       {children}
