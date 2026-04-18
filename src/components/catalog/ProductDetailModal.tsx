@@ -1,4 +1,4 @@
-import { Check, Minus, Plus, Star, X } from 'lucide-react'
+import { Check, Minus, Plus, Star } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { CATEGORY_LABELS, type Product } from '../../types/product'
@@ -6,6 +6,7 @@ import { formatBRL } from '../../utils/format'
 import { Badge } from '../ui/Badge'
 import { overlayVariants, modalVariants } from '../../utils/animations'
 import { Button } from '../ui/Button'
+import { CloseButton } from '../ui/CloseButton'
 import { ProductImage } from '../common/ProductImage'
 
 interface MetaDefinition {
@@ -216,14 +217,13 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
           aria-label={`Visualizacao expandida da imagem de ${product.name}`}
           onClick={() => setIsImageExpanded(false)}
         >
-          <button
-            type="button"
+          <CloseButton
             onClick={() => setIsImageExpanded(false)}
             aria-label="Fechar visualizacao expandida da imagem"
-            className="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-black/40 text-white transition hover:bg-black/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-          >
-            <X size={20} aria-hidden="true" />
-          </button>
+            tone="overlay"
+            size="lg"
+            className="absolute right-4 top-4"
+          />
 
           <div
             className="mx-auto flex h-full w-full max-w-6xl items-center justify-center"
@@ -298,14 +298,11 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
                 <Badge variant="category">{product.categoryName || CATEGORY_LABELS[product.category]}</Badge>
                 <h2 className="mt-2 font-display text-3xl leading-tight text-navy">{product.name}</h2>
               </div>
-              <button
-                type="button"
+              <CloseButton
                 onClick={onClose}
                 aria-label="Fechar detalhes do produto"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-500 transition hover:border-navy/40 hover:text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
-              >
-                <X size={18} aria-hidden="true" />
-              </button>
+                className="shrink-0"
+              />
             </div>
 
             <p className="text-sm leading-relaxed text-slate-600">{product.description.long}</p>

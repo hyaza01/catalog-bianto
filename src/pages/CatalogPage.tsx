@@ -422,7 +422,7 @@ export const CatalogPage = () => {
   ])
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-3 pb-28 pt-6 sm:px-4 sm:pt-8 md:pb-8 lg:px-6">
+    <div className="mx-auto w-full max-w-7xl overflow-x-clip px-3 pb-28 pt-6 sm:px-4 sm:pt-8 md:pb-8 lg:px-6">
       <div className="mb-5">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-primary">Catálogo Bianto Store</p>
         <h1 className="mt-1 font-display text-3xl leading-tight text-brand-text sm:text-4xl lg:text-5xl">Monte sua seleção</h1>
@@ -443,7 +443,7 @@ export const CatalogPage = () => {
           </div>
         </aside>
 
-        <section className="min-w-0 space-y-3">
+        <section className="min-w-0 space-y-3 overflow-x-clip">
           <CatalogToolbar
             search={filters.search}
             onSearchChange={handleSearchChange}

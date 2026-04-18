@@ -44,21 +44,22 @@ export const ProductGrid = ({ products, isLoading, onOpenDetails, onSelect }: Pr
           <p className="mt-2 text-sm text-brand-primary">Ajuste os filtros para encontrar outras opções no catálogo.</p>
         </motion.div>
       ) : (
-        <motion.div key="products-grid-wrapper" layout className="overflow-x-hidden rounded-2xl bg-brand-bg/30 p-1.5 sm:p-2">
+        <motion.div
+          key="products-grid-wrapper"
+          className="w-full max-w-full overflow-x-clip rounded-2xl bg-brand-bg/30 p-1.5 [touch-action:pan-y] sm:p-2"
+        >
           <motion.ul
             key="products-grid"
-            layout
             variants={staggerContainer(0.08, 0.1)}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: '-60px' }}
-            className="grid grid-cols-2 items-stretch gap-2 [grid-auto-rows:1fr] sm:grid-cols-3 sm:gap-3 lg:grid-cols-4 lg:gap-4"
+            className="grid w-full max-w-full grid-cols-2 items-stretch gap-2 [grid-auto-rows:1fr] [touch-action:pan-y] sm:grid-cols-3 sm:gap-3 lg:grid-cols-4 lg:gap-4"
           >
             <AnimatePresence>
               {products.map((product) => (
                 <motion.li
                   key={product.id}
-                  layout
                   className="h-full min-w-0 list-none"
                   variants={fadeUp}
                   initial={{ opacity: 0, scale: 0.95 }}

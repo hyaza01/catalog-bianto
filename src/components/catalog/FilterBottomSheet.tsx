@@ -1,7 +1,7 @@
-import { X } from 'lucide-react'
 import type { ComponentProps } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { CatalogFilters } from './CatalogFilters'
+import { CloseButton } from '../ui/CloseButton'
 import { overlayVariants, bottomSheetVariants } from '../../utils/animations'
 
 interface FilterBottomSheetProps {
@@ -51,15 +51,12 @@ export const FilterBottomSheet = ({ isOpen, onClose, filterProps }: FilterBottom
                   </button>
                 )}
               </div>
-              <motion.button
-                type="button"
+              <CloseButton
                 onClick={onClose}
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-brand-surface text-brand-primary transition hover:bg-[#C9B8A8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
                 aria-label="Fechar painel de filtros"
-                whileTap={{ scale: 0.9 }}
-              >
-                <X size={18} aria-hidden="true" />
-              </motion.button>
+                size="md"
+                className="h-9 w-9 rounded-xl"
+              />
             </header>
 
             <div className="flex-1 overflow-y-auto px-5 pb-6">
