@@ -230,13 +230,19 @@
 /* ── Custom cursor glow ── */
 .cursor-glow {
   position: fixed;
-  width: 400px;
-  height: 400px;
+  width: 350px;
+  height: 350px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(95, 111, 90, 0.06) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(201, 164, 106, 0.10) 0%,
+    rgba(95, 111, 90, 0.06) 40%,
+    transparent 70%
+  );
   pointer-events: none;
   z-index: 0;
   transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
   transition: opacity 0.3s ease;
 }
 
