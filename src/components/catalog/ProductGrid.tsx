@@ -59,13 +59,12 @@ export const ProductGrid = ({ products, isLoading, onOpenDetails, onSelect }: Pr
                 <motion.li
                   key={product.id}
                   layout
-                  layoutId={`product-card-${product.id}`}
                   className="h-full min-w-0 list-none"
                   variants={fadeUp}
-                  initial={{ opacity: 0, scale: 0.8 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.3 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.25 }}
                 >
                   <ProductCard product={product} onOpenDetails={onOpenDetails} onSelect={onSelect} variant="grid" />
                 </motion.li>

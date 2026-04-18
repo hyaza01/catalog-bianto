@@ -161,27 +161,24 @@ export const overlayVariants: Variants = {
 export const modalVariants: Variants = {
   hidden: {
     opacity: 0,
-    scale: 0.9,
-    y: 30,
-    filter: 'blur(10px)',
+    scale: 0.95,
+    y: 20,
   },
   visible: {
     opacity: 1,
     scale: 1,
     y: 0,
-    filter: 'blur(0px)',
     transition: {
-      duration: 0.45,
+      duration: 0.35,
       ease: [...EASE_OUT_EXPO],
     },
   },
   exit: {
     opacity: 0,
-    scale: 0.95,
-    y: 20,
-    filter: 'blur(6px)',
+    scale: 0.97,
+    y: 10,
     transition: {
-      duration: 0.25,
+      duration: 0.2,
       ease: [...EASE_OUT_QUART],
     },
   },

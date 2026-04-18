@@ -239,17 +239,20 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
         </section>
       )}
 
-      <motion.section
-        className="fixed left-1/2 top-1/2 z-[60] w-[calc(100%-1.5rem)] max-w-4xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl border border-navy/10 bg-white shadow-2xl"
-        aria-label={`Detalhes do produto ${product.name}`}
-        layoutId={`product-card-${product.id}`}
-        variants={modalVariants}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-        style={{ x: '-50%', y: '-50%' }}
+      <div
+        className="fixed inset-0 z-[60] flex items-center justify-center p-3"
+        onClick={onClose}
       >
-        <div className="grid max-h-[88vh] grid-cols-1 overflow-y-auto md:grid-cols-[1.1fr_1fr]">
+        <motion.section
+          className="relative w-full max-w-4xl overflow-hidden rounded-3xl border border-navy/10 bg-white shadow-2xl max-h-[90vh]"
+          aria-label={`Detalhes do produto ${product.name}`}
+          variants={modalVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          onClick={(e) => e.stopPropagation()}
+        >
+        <div className="grid max-h-[90vh] grid-cols-1 overflow-y-auto md:grid-cols-[1.1fr_1fr]">
           <div className="border-b border-slate-200 p-4 md:border-b-0 md:border-r md:p-5">
             <div className="aspect-[4/3] overflow-hidden rounded-2xl">
               <button
@@ -419,6 +422,7 @@ export const ProductDetailModal = ({ product, onClose, onAddToSelection }: Produ
           </div>
         </div>
       </motion.section>
+      </div>
     </>
   )
 }

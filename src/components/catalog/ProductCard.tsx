@@ -90,7 +90,6 @@ export const ProductCard = ({ product, onOpenDetails, onSelect, index = 0 }: Pro
 
   return (
     <motion.article
-      layoutId={`product-card-${product.id}`}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       style={{ rotateX, rotateY, transformPerspective: 700 }}
@@ -110,13 +109,13 @@ export const ProductCard = ({ product, onOpenDetails, onSelect, index = 0 }: Pro
           className="relative block w-full min-w-0 overflow-hidden text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5F6F5A]"
         >
           <div className="w-full aspect-square border-b border-[#E8DDD4] bg-[#EDE6DE] overflow-hidden">
-            <motion.div style={tiltEnabled ? { x: imgX, y: imgY, scale: 1.15 } : undefined} className="h-full w-full">
+            <motion.div style={tiltEnabled ? { x: imgX, y: imgY } : undefined} className="h-full w-full">
               <ProductImage
                 src={product.images[0]}
                 alt={`Imagem do produto ${product.name}`}
                 loading="lazy"
                 className={cn('h-full w-full', index % 2 === 0 ? 'product-float' : 'product-float-even')}
-                imgClassName="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                imgClassName="h-full w-full object-cover"
               />
             </motion.div>
           </div>
