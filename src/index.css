@@ -227,24 +227,36 @@
   background-clip: text;
 }
 
-/* ── Custom cursor glow ── */
-.cursor-glow {
-  position: fixed;
-  width: 350px;
-  height: 350px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(201, 164, 106, 0.10) 0%,
-    rgba(95, 111, 90, 0.06) 40%,
-    transparent 70%
-  );
-  pointer-events: none;
-  z-index: 0;
-  transform: translate(-50%, -50%);
-  mix-blend-mode: screen;
-  transition: opacity 0.3s ease;
+/* ── Background orbs (CSS-only, GPU composited) ── */
+@keyframes orb-drift-1 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(30px, -20px); }
+  66% { transform: translate(-20px, 30px); }
 }
+@keyframes orb-drift-2 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(-40px, 30px); }
+  66% { transform: translate(20px, -20px); }
+}
+@keyframes orb-drift-3 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(20px, -30px); }
+  66% { transform: translate(-30px, 10px); }
+}
+.bg-orb-1 {
+  will-change: transform;
+  animation: orb-drift-1 20s linear infinite;
+}
+.bg-orb-2 {
+  will-change: transform;
+  animation: orb-drift-2 25s linear infinite;
+}
+.bg-orb-3 {
+  will-change: transform;
+  animation: orb-drift-3 22s linear infinite;
+}
+
+
 
 /* ── Card 3D hover ── */
 .card-3d {
@@ -384,7 +396,10 @@
   }
   .product-float,
   .product-float-even,
-  .badge-pulse {
+  .badge-pulse,
+  .bg-orb-1,
+  .bg-orb-2,
+  .bg-orb-3 {
     animation: none !important;
   }
   .parallax-bg,

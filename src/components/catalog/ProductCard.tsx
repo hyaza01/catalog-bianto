@@ -1,5 +1,5 @@
 import { Eye, ShoppingBag } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence, useMotionValue, useTransform, useReducedMotion } from 'framer-motion'
 import { CATEGORY_LABELS, type Product } from '../../types/product'
 import { formatBRL } from '../../utils/format'
@@ -61,45 +61,6 @@ export const ProductCard = ({ product, onOpenDetails, onSelect, index = 0 }: Pro
     y.set(0)
   }
 
-  // SVG distortion filter (desktop only)
-  const imgContainerRef = useRef<HTMLDivElement>(null)
-  function onCardMouseEnter() {
-    if (isMobile || shouldReduce) return
-    const el = document.getElementById('displace-map')
-    if (!el) return
-    let start: number | null = null
-    const duration = 300
-    function tick(ts: number) {
-      if (!start) start = ts
-      const progress = Math.min((ts - start) / duration, 1)
-      el!.setAttribute('scale', String(progress * 18))
-      if (progress < 1) requestAnimationFrame(tick)
-    }
-    requestAnimationFrame(tick)
-    if (imgContainerRef.current) {
-      imgContainerRef.current.style.filter = 'url(#distort)'
-    }
-  }
-  function onCardMouseLeave() {
-    const el = document.getElementById('displace-map')
-    if (!el) return
-    let start: number | null = null
-    const duration = 300
-    const from = Number(el.getAttribute('scale') || '0')
-    function tick(ts: number) {
-      if (!start) start = ts
-      const progress = Math.min((ts - start) / duration, 1)
-      el!.setAttribute('scale', String(from * (1 - progress)))
-      if (progress < 1) requestAnimationFrame(tick)
-    }
-    requestAnimationFrame(tick)
-    if (imgContainerRef.current) {
-      setTimeout(() => {
-        if (imgContainerRef.current) imgContainerRef.current.style.filter = ''
-      }, duration)
-    }
-  }
-
   const createRipple = useRipple()
   const categoryLabel = product.categoryName?.trim() || CATEGORY_LABELS[product.category]
   const shortDescription =
@@ -131,8 +92,7 @@ export const ProductCard = ({ product, onOpenDetails, onSelect, index = 0 }: Pro
     <motion.article
       layoutId={`product-card-${product.id}`}
       onMouseMove={onMouseMove}
-      onMouseLeave={() => { onMouseLeave(); onCardMouseLeave() }}
-      onMouseEnter={onCardMouseEnter}
+      onMouseLeave={onMouseLeave}
       style={{ rotateX, rotateY, transformPerspective: 700 }}
       transition={{ type: 'spring', stiffness: 250, damping: 25 }}
       whileHover={tiltEnabled ? { scale: 1.02 } : undefined}
@@ -149,7 +109,7 @@ export const ProductCard = ({ product, onOpenDetails, onSelect, index = 0 }: Pro
           aria-label={`Abrir detalhes de ${product.name}`}
           className="relative block w-full min-w-0 overflow-hidden text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5F6F5A]"
         >
-          <div ref={imgContainerRef} className="w-full aspect-square border-b border-[#E8DDD4] bg-[#EDE6DE] overflow-hidden">
+          <div className="w-full aspect-square border-b border-[#E8DDD4] bg-[#EDE6DE] overflow-hidden">
             <motion.div style={tiltEnabled ? { x: imgX, y: imgY, scale: 1.15 } : undefined} className="h-full w-full">
               <ProductImage
                 src={product.images[0]}
