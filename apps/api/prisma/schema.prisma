@@ -1,0 +1,321 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+}
+
+enum ProductStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum PriceMode {
+  FIXED
+  FROM
+  ON_REQUEST
+}
+
+enum LeadStatus {
+  NEW
+  IN_PROGRESS
+  CONVERTED
+  LOST
+  SPAM
+}
+
+enum AnalyticsEventType {
+  PRODUCT_VIEW
+  WHATSAPP_CLICK
+  LEAD_SUBMIT
+  CATALOG_SEARCH
+  FILTER_APPLY
+}
+
+enum ImageSourceType {
+  EXTERNAL_URL
+  UPLOAD
+}
+
+model User {
+  id            String         @id @default(uuid())
+  name          String
+  email         String         @unique
+  passwordHash  String
+  role          UserRole       @default(ADMIN)
+  isActive      Boolean        @default(true)
+  refreshTokens RefreshToken[]
+  auditLogs     AuditLog[]
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  deletedAt     DateTime?
+
+  @@index([email])
+  @@index([isActive])
+}
+
+model RefreshToken {
+  id          String    @id @default(uuid())
+  tokenHash   String
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt   DateTime
+  revokedAt   DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model Category {
+  id             String      @id @default(uuid())
+  name           String
+  slug           String      @unique
+  description    String?
+  imageUrl       String?
+  parentId       String?
+  parent         Category?   @relation("CategoryTree", fields: [parentId], references: [id])
+  children       Category[]  @relation("CategoryTree")
+  products       Product[]
+  sortOrder      Int         @default(0)
+  isActive       Boolean     @default(true)
+
+  seoTitle       String?
+  seoDescription String?
+
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  deletedAt      DateTime?
+
+  @@index([slug])
+  @@index([parentId])
+  @@index([isActive])
+  @@index([sortOrder])
+}
+
+model Product {
+  id                    String              @id @default(uuid())
+  name                  String
+  slug                  String              @unique
+  shortDescription      String
+  longDescription       String
+  status                ProductStatus       @default(DRAFT)
+  priceMode             PriceMode           @default(ON_REQUEST)
+  basePriceCents        Int?
+  minQuantity           Int                 @default(1)
+  averageProductionDays Int?
+  isAvailable           Boolean             @default(true)
+  isFeatured            Boolean             @default(false)
+  isCustomizable        Boolean             @default(true)
+
+  categoryId            String
+  category              Category            @relation(fields: [categoryId], references: [id])
+
+  images                ProductImage[]
+  tags                  ProductTag[]
+  attributes            ProductAttribute[]
+  variants              ProductVariant[]
+  leadProducts          LeadProduct[]
+  analyticsEvents       AnalyticsEvent[]
+
+  seoTitle              String?
+  seoDescription        String?
+  canonicalUrl          String?
+
+  publishedAt           DateTime?
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+  deletedAt             DateTime?
+
+  @@index([slug])
+  @@index([categoryId])
+  @@index([status])
+  @@index([isAvailable])
+  @@index([isFeatured])
+  @@index([basePriceCents])
+  @@index([minQuantity])
+  @@index([createdAt])
+}
+
+model ProductImage {
+  id          String          @id @default(uuid())
+  productId   String
+  product     Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url         String
+  altText     String
+  caption     String?
+  sourceType  ImageSourceType @default(EXTERNAL_URL)
+  sortOrder   Int             @default(0)
+  isCover     Boolean         @default(false)
+  isActive    Boolean         @default(true)
+
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@index([productId])
+  @@index([isCover])
+  @@index([sortOrder])
+}
+
+model ProductTag {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name      String
+  slug      String
+
+  createdAt DateTime @default(now())
+
+  @@unique([productId, slug])
+  @@index([slug])
+}
+
+model ProductAttribute {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  key       String
+  label     String
+  value     String
+  unit      String?
+  sortOrder Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
+  @@index([key])
+  @@index([value])
+}
+
+model ProductVariant {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name      String
+  value     String
+  sortOrder Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
+  @@index([name])
+}
+
+model Lead {
+  id                  String        @id @default(uuid())
+  name                String
+  whatsapp            String
+  email               String?
+  city                String?
+  state               String?
+  desiredQuantity     Int?
+  message             String?
+  desiredDeadline     String?
+  personalizationType String?
+  status              LeadStatus    @default(NEW)
+  internalNotes       String?
+
+  source              String?
+  pageUrl             String?
+  referrer            String?
+  utmSource           String?
+  utmMedium           String?
+  utmCampaign         String?
+  utmTerm             String?
+  utmContent          String?
+  userAgent           String?
+  ipHash              String?
+
+  consentAccepted     Boolean       @default(false)
+  products            LeadProduct[]
+  analyticsEvents     AnalyticsEvent[]
+
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+  deletedAt           DateTime?
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([whatsapp])
+  @@index([email])
+}
+
+model LeadProduct {
+  id        String   @id @default(uuid())
+  leadId    String
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int?
+  notes     String?
+
+  createdAt DateTime @default(now())
+
+  @@index([leadId])
+  @@index([productId])
+}
+
+model SiteSetting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     Json
+  isPublic  Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([key])
+  @@index([isPublic])
+}
+
+model AnalyticsEvent {
+  id        String             @id @default(uuid())
+  type      AnalyticsEventType
+  productId String?
+  product   Product?           @relation(fields: [productId], references: [id])
+  leadId    String?
+  lead      Lead?              @relation(fields: [leadId], references: [id])
+  sessionId String?
+  pageUrl   String?
+  metadata  Json?
+  userAgent String?
+  ipHash    String?
+
+  createdAt DateTime           @default(now())
+
+  @@index([type])
+  @@index([productId])
+  @@index([leadId])
+  @@index([createdAt])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  action    String
+  entity    String
+  entityId  String?
+  summary   String?
+  metadata  Json?
+  ipHash    String?
+  userAgent String?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([entity])
+  @@index([entityId])
+  @@index([createdAt])
+}

@@ -1,42 +1,35 @@
 {
-  "name": "catalog-bianto",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "name": "bianto-catalog-v2",
+  "version": "1.0.0",
+  "description": "Catalogo digital Bianto Store V2",
+  "main": "index.js",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "test": "npm run test --prefix apps/api",
+    "build": "npm run build --prefix apps/web && npm run build --prefix apps/api",
+    "setup": "npm install && npm install --prefix apps/web && npm install --prefix apps/api",
+    "lint": "npm run lint --prefix apps/web && npm run lint --prefix apps/api",
+    "format": "echo 'Use prettier from apps'",
+    "db:studio": "npm run prisma:studio --prefix apps/api",
+    "db:migrate": "npm run prisma:migrate --prefix apps/api",
+    "db:seed": "npm run prisma:seed --prefix apps/api",
+    "dev:web": "npm run dev --prefix apps/web",
+    "dev:api": "npm run start:dev --prefix apps/api",
+    "dev": "concurrently \"npm run dev:web\" \"npm run dev:api\""
   },
-  "dependencies": {
-    "@supabase/supabase-js": "^2.103.2",
-    "@tanstack/react-query": "^5.99.0",
-    "framer-motion": "^12.38.0",
-    "jspdf": "^4.2.1",
-    "jspdf-autotable": "^5.0.7",
-    "lenis": "^1.3.23",
-    "lucide-react": "^1.8.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "react-router-dom": "^6.30.1",
-    "zustand": "^5.0.12"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hyaza01/catalog-bianto.git"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/hyaza01/catalog-bianto/issues"
+  },
+  "homepage": "https://github.com/hyaza01/catalog-bianto#readme",
+  "private": true,
   "devDependencies": {
-    "@eslint/js": "^9.39.4",
-    "@types/node": "^24.12.2",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.1",
-    "autoprefixer": "^10.5.0",
-    "eslint": "^9.39.4",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.5.2",
-    "globals": "^17.4.0",
-    "postcss": "^8.5.10",
-    "tailwindcss": "^3.4.17",
-    "typescript": "~6.0.2",
-    "typescript-eslint": "^8.58.0",
-    "vite": "^8.0.4"
+    "concurrently": "^9.2.1"
   }
 }

@@ -1,169 +1,110 @@
-# Bianto Store - Catalogo
+# Bianto Catalog V2
 
-MVP estatico em React + Vite + TypeScript, organizado para futura migracao para backend real.
+Monorepo full stack para o novo catalogo digital da Bianto Store, focado em geracao de leads.
 
-## Rodar o projeto
+## Stack
+
+- Frontend: Next.js App Router, React, TypeScript strict, Tailwind CSS, Framer Motion, React Hook Form, Zod.
+- Backend: NestJS, TypeScript strict, Prisma ORM, PostgreSQL, JWT com refresh token em cookie HttpOnly.
+- Infra local: Docker Compose com Postgres, API, Web e Prisma Studio.
+
+## Estrutura
+
+```txt
+bianto-catalog-v2/
+├── apps/
+│   ├── web/   # Next.js
+│   └── api/   # NestJS
+├── packages/
+│   ├── config/
+│   └── types/
+├── docker-compose.yml
+├── .env.example
+└── package.json
+```
+
+## Setup local (sem Docker)
 
 1. Instale dependencias:
-   npm install
-2. Configure ambiente:
-   - copie .env.example para .env
-   - ajuste VITE_WHATSAPP_NUMBER
-3. Desenvolvimento:
-   npm run dev
-4. Build:
-   npm run build
-5. Preview do build:
-   npm run preview
 
-Importante: nao abra index.html com file://. Use sempre o servidor do Vite.
-
-## Seguranca de variaveis de ambiente
-
-- Nunca commite arquivos `.env`, `.env.production` ou similares.
-- Use apenas `.env.example` como modelo publico.
-- No GitHub Pages (Actions), configure estes secrets do repositorio:
-   - `VITE_WHATSAPP_NUMBER`
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_ANON_KEY`
-   - `VITE_ADMIN_EMAIL`
-   - `VITE_ADMIN_EMAILS`
-   - `VITE_CONFIG_INVALIDATION_WEBHOOK_URL`
-- Se qualquer chave vazar, revogue no provedor e gere uma nova imediatamente.
-
-## Estrutura de dados (falsa API)
-
-O catalogo foi dividido por dominio para facilitar manutencao:
-
-- src/data/categories/canecas.ts
-- src/data/categories/garrafas-termicas.ts
-- src/data/categories/copos.ts
-- src/data/categories/kits.ts
-- src/data/categories/outros.ts
-- src/data/index.ts
-
-src/data/index.ts agrega tudo e exporta uma fonte unica:
-
-- catalog
-- PRODUCTS (alias de compatibilidade)
-- PRICE_RANGE
-- ALL_TAGS
-- PRODUCTS_BY_ID
-- FEATURED_PRODUCTS
-
-## Contrato de produto (pronto para backend)
-
-Tipagem principal em src/types/product.ts:
-
-- Category
-- Product
-- ProductDescription
-- ProductFlags
-- ProductVariants
-
-Formato atual do Product:
-
-```ts
-interface Product {
-  id: string
-  name: string
-  description: {
-    short: string
-    long: string
-  }
-  category: Category
-  price: number
-  minQuantity: number
-  images: string[]
-  tags: string[]
-  flags: {
-    isAvailable: boolean
-    isFeatured: boolean
-    isCustomizable: boolean
-  }
-  variants?: {
-    sizes?: string[]
-    colors?: string[]
-  }
-}
+```bash
+npm run setup
 ```
 
-## Anexos de imagem (estrategia atual)
+2. Copie os envs:
 
-Nao salvamos fotos de produto no repositorio.
-As imagens sao URLs externas (Cloudinary), no campo images.
-
-URL padrao usada nos exemplos atuais:
-
-https://res.cloudinary.com/dru1rkklk/image/upload/q_auto/f_auto/v1776291490/Gemini_Generated_Image_b6izwhb6izwhb6iz_1_grc7dl.png
-
-Para anexar/alterar imagem de um produto:
-
-1. Faça upload da imagem no Cloudinary
-2. Copie a URL final
-3. Abra a categoria correta em src/data/categories/
-4. Atualize o campo images do produto
-
-Exemplo:
-
-```ts
-images: ['https://res.cloudinary.com/.../minha-imagem.png']
+```bash
+cp apps/api/.env.example apps/api/.env
+cp apps/web/.env.example apps/web/.env.local
 ```
 
-## Como adicionar um novo produto
+3. Suba Postgres (local ou docker).
 
-1. Escolha o arquivo de categoria em src/data/categories/
-2. Adicione um novo objeto Product no array da categoria
-3. Use id unico (preferencia: UUID)
-4. Informe description, price, minQuantity, flags e images
-5. Rode npm run dev para validar na UI
-6. Rode npm run build antes do deploy
+4. Gere client Prisma, rode migration e seed:
 
-## Hook assíncrono para preparar V2
+```bash
+npm run db:migrate
+npm run db:seed
+```
 
-O app nao consome o catalogo diretamente nos componentes principais.
-Ele usa src/hooks/useCatalog.ts para simular latencia e preparar troca por API real.
+5. Rode web + api:
 
-Na V2, a migracao principal sera trocar a carga local por fetch no proprio hook.
+```bash
+npm run dev
+```
 
-## Anexos gerais (PDFs, tabelas, etc)
+- Web: http://localhost:3000
+- API: http://localhost:4000/api/v1
+- Swagger: http://localhost:4000/api/docs
 
-Para arquivos estaticos nao relacionados a imagens de produto:
+## Setup com Docker Compose
 
-1. Crie public/anexos
-2. Coloque os arquivos nessa pasta
-3. Acesse por /anexos/nome-do-arquivo.pdf
+```bash
+docker compose up --build
+```
 
-## Checklist antes de deploy
+Servicos:
 
-1. npm run dev
-2. Testar Home e Catalogo
-3. Testar modal de produto e selecao
-4. Testar PDF e WhatsApp
-5. npm run build
+- Web: http://localhost:3000
+- API: http://localhost:4000/api/v1
+- Postgres: localhost:5432
+- Prisma Studio: http://localhost:5555
 
-## Cache e sincronizacao de configuracoes
+## Scripts principais
 
-As configuracoes globais (site_settings) precisam refletir rapidamente em desktop e mobile.
+Na raiz:
 
-Este projeto ja aplica no client:
+- `npm run dev`: sobe web e api em paralelo.
+- `npm run build`: build de web e api.
+- `npm run lint`: lint de web e api.
+- `npm run db:migrate`: migrate Prisma da API.
+- `npm run db:seed`: seed Prisma da API.
+- `npm run db:studio`: Prisma Studio da API.
 
-- revalidacao automatica com React Query (focus, mount e transicao de rota)
-- invalidacao por evento realtime do Supabase
-- requests sem cache no navegador para consultas ao Supabase
-- limpeza de Service Worker legado e caches antigos na inicializacao
+## Credenciais seed
 
-Configuracao recomendada em infraestrutura (CDN/proxy):
+No seed da API:
 
-1. Nao aplicar Cache First em respostas da API de configuracoes (site_settings)
-2. Para endpoints de configuracao, usar cache policy equivalente a no-store/no-cache
-3. Evitar variacao de cache por User-Agent para a mesma rota da API
-4. Se houver Service Worker externo, configurar Network First ou Stale-While-Revalidate para dados dinamicos
+- Nome: `ADMIN_SEED_NAME`
+- E-mail: `ADMIN_SEED_EMAIL`
+- Senha: `ADMIN_SEED_PASSWORD`
 
-Passos adicionais para ambiente real:
+Defina esses valores em `apps/api/.env` antes de executar o seed.
 
-1. Execute tambem o SQL em supabase/policies/site_settings_rpc.sql para habilitar a RPC get_site_settings (leitura por POST, com menor risco de cache intermediario)
-2. Opcional: configure VITE_CONFIG_INVALIDATION_WEBHOOK_URL para chamar um endpoint de purge/revalidate da sua infraestrutura sempre que o Admin salvar configuracoes
-3. No endpoint de webhook, invalide ao menos as rotas /, /catalogo, /sobre e /index.html
-4. Se estiver usando Cloudflare/CloudFront, remova Vary por User-Agent para rotas de configuracao global e unifique a chave de cache
+## Entregas da V1 nesta base
 
+- Catalogo publico com Home, Catalogo, Categoria, Produto, Contato e Obrigado.
+- Captura de lead publica com validacao no frontend e backend.
+- CTA WhatsApp com mensagem pre-formatada.
+- API REST publica/admin com prefixo `/api/v1`.
+- Auth admin com login/logout/refresh/me via cookie HttpOnly.
+- CRUD inicial admin de produtos, categorias, leads e configuracoes.
+- Dashboard admin com resumo basico.
+- Prisma schema completo com migration inicial e seed.
+- Sitemap, robots e metadata SEO base.
+
+## Observacoes
+
+- O projeto atual e uma nova base (não reaproveita arquitetura Vite anterior).
+- A migration inicial inclui extensoes `unaccent` e `pg_trgm` para busca evolutiva.
+- Alguns fluxos avancados (ex.: todos os testes E2E e refinamentos de UX admin) podem ser expandidos nas proximas iteracoes.
